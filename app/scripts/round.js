@@ -187,7 +187,7 @@ function Bet(round, betId) {
 function Game() {
     this.contract = web3.eth.contract([{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundMinAmountByBet','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[],'name':'getBalance','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'_a','type':'bytes32'}],'name':'getNumber','outputs':[{'name':'','type':'uint8'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'roundId','type':'uint256'},{'name':'betId','type':'uint256'}],'name':'getRoundBetNumber','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundPrize','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':false,'inputs':[],'name':'withdraw','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':false,'inputs':[],'name':'kill','outputs':[],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundMaxNumberOfBets','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[],'name':'getCurrentRoundId','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundOpen','outputs':[{'name':'','type':'bool'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundNumber','outputs':[{'name':'','type':'uint8'}],'payable':false,'type':'function'},{'constant':true,'inputs':[],'name':'getBlockPointer','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'roundId','type':'uint256'},{'name':'betId','type':'uint256'}],'name':'getRoundBetAmount','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundBlockNumber','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundNumberOfBets','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'roundId','type':'uint256'},{'name':'betId','type':'uint256'}],'name':'getRoundBetOrigin','outputs':[{'name':'','type':'address'}],'payable':false,'type':'function'},{'constant':false,'inputs':[{'name':'bet','type':'uint8'}],'name':'bet','outputs':[{'name':'','type':'bool'}],'payable':true,'type':'function'},{'constant':true,'inputs':[{'name':'i','type':'uint256'}],'name':'getBlockHash','outputs':[{'name':'blockHash','type':'bytes32'}],'payable':false,'type':'function'},{'inputs':[{'name':'_blockPointer','type':'uint256'},{'name':'_maxNumberOfBets','type':'uint256'},{'name':'_minAmountByBet','type':'uint256'},{'name':'_prize','type':'uint256'},{'name':'_hash','type':'bytes32'}],'payable':false,'type':'constructor'},{'payable':true,'type':'fallback'},{'anonymous':false,'inputs':[{'indexed':true,'name':'id','type':'uint256'},{'indexed':false,'name':'maxNumberOfBets','type':'uint256'},{'indexed':false,'name':'minAmountByBet','type':'uint256'}],'name':'RoundOpen','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'name':'id','type':'uint256'},{'indexed':false,'name':'number','type':'uint8'},{'indexed':false,'name':'blockNumber','type':'uint256'},{'indexed':false,'name':'blockHash','type':'bytes32'}],'name':'RoundClose','type':'event'},{'anonymous':false,'inputs':[{'indexed':false,'name':'maxNumberOfBets','type':'uint256'}],'name':'MaxNumberOfBetsChanged','type':'event'},{'anonymous':false,'inputs':[{'indexed':false,'name':'minAmountByBet','type':'uint256'}],'name':'MinAmountByBetChanged','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'name':'origin','type':'address'},{'indexed':false,'name':'roundId','type':'uint256'},{'indexed':false,'name':'betId','type':'uint256'}],'name':'BetPlaced','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'name':'winnerAddress','type':'address'},{'indexed':false,'name':'amount','type':'uint256'}],'name':'RoundWinner','type':'event'}]);
 
-    this.contractInstance = this.contract.at('0x967382df3637dAb2476394C1545E180D6DdB867a');
+    this.contractInstance = this.contract.at('0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c');
 
     var self = this;
     this.init = function () {
@@ -219,7 +219,7 @@ function Game() {
     };
 
     this.initEvents = function () {
-        var triggered = true;
+        var triggered = false;
         this.betPlacedEvent = self.contractInstance.BetPlaced();
         this.betPlacedEvent.watch(function(error, event){
         console.log('event origin: ' + event.args.origin);
@@ -396,6 +396,16 @@ function Game() {
         // $('#avatar').css('display', 'block');
     }
 
+    this.changeAccount = function (address) {
+        self.account = address;
+        self.renderAvatar(self.account);
+        self.contractInstance.getBalance({from: self.account}, function(error, result){
+            var balance = web3.fromWei(result.valueOf(), 'ether');
+            $('#current_account_balance').html(balance);
+        });
+        $('#current_account_number').html(self.account);
+    }
+
     this.initAccounts = function () {
         web3.eth.getAccounts(function(error, accounts) {
             var account = null;
@@ -408,8 +418,7 @@ function Game() {
             });
 
             if (self.account == null) {
-                self.account = account;
-                self.renderAvatar(self.account);
+                self.changeAccount(account)
             }
 
             // $('#accounts_dropdown').on('change', function () {
@@ -422,13 +431,7 @@ function Game() {
             $('.accounts_dropdown_item').click(function() {
                 var newValue = $(this).attr('href').replace('#!', '');
                 console.log(newValue);
-                self.account = newValue;
-                $('#current_account_number').html(self.account);
-                self.renderAvatar(self.account);
-                self.contractInstance.getBalance({from: self.account}, function(error, result){
-                    var balance = web3.fromWei(result.valueOf(), 'ether');
-                    $('#current_account_balance').html(balance);
-                });
+                self.changeAccount(newValue)
             });
         });
     }
