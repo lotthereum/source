@@ -27,7 +27,7 @@
     <!-- endbuild -->
 
     <!--Import Google Icon Font-->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   </head>
   <body class="">
@@ -51,10 +51,10 @@
 
       <ul class="tabs tabs-fixed-width main-navbar">
         <li class="tab col s2"><a class="active" href="#bet001">0.1 eth</a></li>
-        <li class="tab col s2"><a href="#bet025">0.25 eth</a></li>
-        <li class="tab col s2"><a href="#bet050">0.5 eth</a></li>
-        <li class="tab col s2"><a href="#bet075">0.75 eth</a></li>
-        <li class="tab col s2"><a href="#bet100">1 eth</a></li>
+        <li class="tab col s2 disabled"><a href="#bet025" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Not available">0.25 eth</a></li>
+        <li class="tab col s2 disabled"><a href="#bet050" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Coming soon">0.5 eth</a></li>
+        <li class="tab col s2 disabled"><a href="#bet075" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Maybe next time">0.75 eth</a></li>
+        <li class="tab col s2 disabled"><a href="#bet100" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Not so fast">1 eth</a></li>
         <li class="tab col s2"><a href="#withdraw"><span class="new badge balance" data-badge-caption="ETH"></span>Withdraw</a></li>
       </ul>
 
@@ -195,23 +195,23 @@
           <div class="row">
             <div class="input-field col s6">
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_0" value="0" />
+                <input name="bet_pick" type="radio" id="pick_0" value="0" />
                 <label for="pick_0">0 (zero)</label>
               </p>
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_1" value="1" />
+                <input name="bet_pick" type="radio" id="pick_1" value="1" />
                 <label for="pick_1">1 (one)</label>
               </p>
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_2" value="2" />
+                <input name="bet_pick" type="radio" id="pick_2" value="2" />
                 <label for="pick_2">2 (two)</label>
               </p>
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_3" value="3" />
+                <input name="bet_pick" type="radio" id="pick_3" value="3" />
                 <label for="pick_3">3 (three)</label>
               </p>
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_4" value="4" />
+                <input name="bet_pick" type="radio" id="pick_4" value="4" />
                 <label for="pick_4">4 (four)</label>
               </p>
               <!-- <p>
@@ -237,23 +237,23 @@
             </div>
             <div class="input-field col s6">
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_5" value="5" />
+                <input name="bet_pick" type="radio" id="pick_5" value="5" />
                 <label for="pick_5">5 (five)</label>
               </p>
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_6" value="6" />
+                <input name="bet_pick" type="radio" id="pick_6" value="6" />
                 <label for="pick_6">6 (six)</label>
               </p>
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_7" value="7" />
+                <input name="bet_pick" type="radio" id="pick_7" value="7" />
                 <label for="pick_7">7 (seven)</label>
               </p>
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_8" value="8" />
+                <input name="bet_pick" type="radio" id="pick_8" value="8" />
                 <label for="pick_8">8 (eight)</label>
               </p>
               <p>
-                <input class="with-gap" name="bet_pick" type="radio" id="pick_9" value="9" />
+                <input name="bet_pick" type="radio" id="pick_9" value="9" />
                 <label for="pick_9">9 (nine)</label>
               </p>
               <!-- <p>
@@ -296,21 +296,19 @@
   </div>
 
   <footer class="page-footer">
-    <div class="container">
+
+    <!-- <div class="container">
       <div class="row">
         <div class="col l12 s12">
           <p class="grey-text text-lighten-4">We hope you have made some ether using Lotthereum!</p>
-          <!-- <p class="grey-text text-lighten-4">If you want to support the team, send us over a donation! Any amount would help support and continue development on this project and is greatly appreciated.</p>
+          <p class="grey-text text-lighten-4">If you want to support the team, send us over a donation! Any amount would help support and continue development on this project and is greatly appreciated.</p>
           <a class="waves-effect waves btn orange lighten-2 modal-trigger" href="#donate1"><i class="material-icons left">attach_money</i>DONATE NOW</a>
-          <a class="waves-effect waves btn orange lighten-2 right" href="https://github.com/lotthereum/source" target="_blank"><i class="material-icons left">code</i>SOURCE CODE</a> -->
+          <a class="waves-effect waves btn orange lighten-2 right" href="https://github.com/lotthereum/source" target="_blank"><i class="material-icons left">code</i>SOURCE CODE</a>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="footer-copyright">
-      <div class="container">
-      2017
-      <a class="grey-text text-lighten-4 right" href="#!">Lotthereum</a>
-      </div>
+      <div class="container">2017 <a class="grey-text text-lighten-4 right" href="#!">Lotthereum</a></div>
     </div>
   </footer>
 

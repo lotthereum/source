@@ -240,3 +240,7 @@ body {
 .card-content {
   min-height: 230px;
 }
+
+.tab.disabled a {
+  color: #c1c1c1 !important;
+}
