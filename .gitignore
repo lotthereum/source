@@ -1,2 +1,5 @@
 
 truffle/build
+.tmp
+dist
+node_modules
