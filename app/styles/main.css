@@ -1,0 +1,242 @@
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body::before {
+    will-change: transform;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    position: fixed;
+    background: #2196f3 !important;
+}
+
+body {
+    background: #2196f3 !important;
+}
+
+.brand-logo {
+  margin-left: 21px;
+  margin-left: 0;
+  color: red;
+}
+
+.logo {
+  padding: 15px;
+  width: 64px;
+}
+
+.btn-floating img {
+  width: 100%;
+}
+
+.bet-btn {
+  top: 15px !important;
+  right: 15px !important;
+}
+
+.collection-item {
+  background: rgba(255, 255, 255, 0) !important;
+}
+
+.collection {
+  border: 0 !important;
+}
+
+.avatar {
+  min-height: 65px !important;
+}
+
+.collection .collection-item.avatar .title {
+  position: absolute;
+  top: 21px;
+}
+
+.collection .collection-item.avatar .secondary-content {
+  top: 21px !important;
+}
+
+.btn-bar {
+  position: relative !important;
+}
+
+.nav-wrapper {
+  /*background: #2196F3;*/
+  background: white;
+}
+
+.progress {
+  margin-top: 15px !important;
+  margin-bottom: 40px !important;
+}
+
+.round-data td {
+  font-weight: 100 !important;
+}
+
+.round-data {
+  border-top: 1px solid #e0e0e0;
+}
+
+.page-footer {
+  display: none;
+  margin-top: 50px;
+  background: #43c5ff !important;
+  margin-top: 10px;
+}
+
+.footer-copyright {
+  background: #2196f3 !important;
+}
+
+.eth-address, .eth-address2 {
+    width: 42px;
+    height: 42px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    /*box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;*/
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    text-indent: -9999px;
+    position: absolute;
+    left: 15px;
+}
+
+.pick h3 {
+  margin-top: 7px !important;
+}
+
+.pick {
+  margin: 5px;
+}
+
+#accounts_dropdown {
+  width: 90% !important;
+  margin-top: -9px;
+}
+
+.wait_transaction {
+  font-weight: 100;
+  margin-top: -33px;
+}
+
+.dropdown-content li > span {
+  color: #e29f3d !important;
+}
+
+#confirmations {
+  opacity: 0;
+}
+
+.confirmation-badge {
+    position: absolute;
+    left: 435px;
+    top: 20px;
+}
+
+.template {
+  display: none;
+}
+
+#loading {
+  text-align: center;
+  padding: 5%;
+}
+
+.round {
+  margin-top: 30px !important;
+}
+
+.main-container {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 5% 10px 5% !important;
+  background-color: white;
+  display: none;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.tabs {
+  width: 80% !important;
+}
+
+.tabs, .tab, .tab a {
+  height: 64px !important;
+  line-height: 64px !important;
+  background-color: #2196f3 !important;
+  color: white !important;
+}
+
+.indicator {
+  background-color: #ffb74d !important;
+}
+
+.avatar2 {
+  position: absolute !important;
+  top: 17px;
+  right: 15px;
+  left: auto;
+  min-height: auto !important;
+  width: 32px;
+  height: 32px;
+}
+
+#avatar {
+  display: none;
+  cursor: pointer;
+}
+
+.number {
+  padding-top: 4px;
+}
+
+.dropdown-content {
+  width: 480px !important;
+  background-color: rgba(255, 255, 255, 1) !important;
+  padding: 20px 70px !important;
+}
+
+.dropdown-content li a {
+  padding-left: 70px !important;
+}
+
+#dropdown-nav {
+  padding: 0px !important;
+}
+
+.square {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.navbar-fixed {
+  display: none;
+}
+
+.balance {
+  display: none;
+  top: 21px;
+  position: relative;
+  margin-left: 0px !important;
+}
+
+.modal-footer {
+  padding: 0px 15px 15px !important;
+}
+
+.modal-content {
+  padding-bottom: 0;
+}
+
+.card-content {
+  min-height: 230px;
+}

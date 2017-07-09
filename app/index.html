@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lotthereum</title>
+
+    <link rel="icon" sizes="192x192" href="/images/icons-192x192.png">
+    <link rel="shortcut icon" href="/images/icons-72x72.png">
+    <link rel="apple-touch-icon" href="/images/icons-72x72.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/icons-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/icons-144x144.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icons-180x180.png">
+
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/materialize/bin/materialize.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/materialize.css" media="screen,projection"/>
+    <!-- endbuild -->
+
+    <!--Import Google Icon Font-->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+
+  </head>
+  <body class="">
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#about1" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="About Lotthereum"><img src="/images/icons-72x72.png" class="logo"></a>
+        <a class="brand-logo modal-trigger center" href="#about1">Lotthereum</a>
+      </div>
+    </nav>
+
+    <!-- <a id="avatar" class="avatar2 eth-address tooltipped dropdown-button" data-activates='dropdown-nav' data-position="bottom" data-delay="50" data-tooltip=""></a> -->
+
+    <a id="avatar" class="avatar2 eth-address dropdown-button" data-activates="dropdown-nav"></a>
+    <ul id="dropdown-nav" class="dropdown-content">
+    </ul>
+
+      <ul class="tabs tabs-fixed-width main-navbar">
+        <li class="tab col s2"><a class="active" href="#bet001">0.1 eth</a></li>
+        <li class="tab col s2"><a href="#bet025">0.25 eth</a></li>
+        <li class="tab col s2"><a href="#bet050">0.5 eth</a></li>
+        <li class="tab col s2"><a href="#bet075">0.75 eth</a></li>
+        <li class="tab col s2"><a href="#bet100">1 eth</a></li>
+        <li class="tab col s2"><a href="#withdraw"><span class="new badge balance" data-badge-caption="ETH"></span>Withdraw</a></li>
+      </ul>
+
+  </div>
+
+  <div id="loading">
+    <div class="progress blue lighten-4">
+        <div class="indeterminate orange lighten-2"></div>
+    </div>
+  </div>
+
+  <div class="container main-container">
+
+    <div id="bet001" class="col s12">
+      <div class="row">
+        <div id="rounds" class="col s12 m12"></div>
+      </div>
+    </div>
+    <div id="bet025" class="col s12">
+      <div class="row">
+        <div id="rounds1" class="col s12 m12">0.25</div>
+      </div>
+    </div>
+    <div id="bet050" class="col s12">
+      <div class="row">
+        <div id="rounds2" class="col s12 m12">0.5</div>
+      </div>
+    </div>
+    <div id="bet075" class="col s12">
+      <div class="row">
+        <div id="rounds3" class="col s12 m12">0.75</div>
+      </div>
+    </div>
+    <div id="bet100" class="col s12">
+      <div class="row">
+        <div id="rounds3" class="col s12 m12">1</div>
+      </div>
+    </div>
+    <div id="withdraw" class="col s12">
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="card green lighten-2 z-depth-1 round">
+            <div class="card-content white-text">
+              <span class="card-title"><i class="material-icons">monetization_on</i> Withdraw</span>
+              <table class="round-data">
+                <tbody>
+                  <tr>
+                    <td class="right-align">Account:</td>
+                    <td class="left-align title"><span id="current_account_number"></span></td>
+                  </tr>
+                  <tr>
+                    <td class="right-align">Balance:</td>
+                    <td class="left-align title"><span id="current_account_balance"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- <a class="waves-effect waves btn red" href="#!"><i class="material-icons left">cancel</i> CANCEL</a> -->
+              <a class="waves-effect waves btn green right" href="#!"><i class="material-icons left">attach_money</i> WITHDRAW</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <ul class="pagination">
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+      <li class="active orange lighten-2"><a href="#!">1</a></li>
+      <li class="waves-effect"><a href="#!">2</a></li>
+      <li class="waves-effect"><a href="#!">3</a></li>
+      <li class="waves-effect"><a href="#!">4</a></li>
+      <li class="waves-effect"><a href="#!">5</a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul> -->
+
+  </div>
+
+  <!-- Modal About -->
+  <div id="about1" class="modal">
+    <div class="modal-content">
+      <h4>How does Lotthereum works</h4>
+      <p>Every round has a fixed prize, a fixed value per bet and a fixed number of participants.</p>
+      <p>When the last bet is placed the contract will close the round and pick the lucky number.</p>
+      <p>The prize is divided equally by all winners and transfered to the players accounts automatically.</p>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect btn-flat"><i class="material-icons left">done</i>Close</a>
+    </div>
+  </div>
+
+  <!-- Modal Donations -->
+  <div id="donate1" class="modal">
+    <div class="modal-content">
+      <h4 class="centered">Help Lotthereum Grow</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>Ethereum</td>
+            <td><img src="images/ether-donations.png"><br />0xCa5BA0B004Fb198fbA60D52A060bc7fB4DAd34e5</td>
+          </tr>
+          <tr>
+            <td>Bitcoin</td>
+            <td><img src="images/bitcoin-donations.png"><br />1CDafgmGfDY7L6moSoHGo7fhyim8iBPvUx</td>
+          </tr>
+          <tr>
+            <td>Litecoin</td>
+            <td><img src="images/litecoin-donations.png"></br >LaCM9YtCdXZZT3nLWpsxTzrvG5SVudMFo7</td>
+          </tr>
+          <tr>
+            <td>Dogecoin</td>
+            <td><img src="images/doge-donations.png"><br />DFtRpv2a6FCBwsrjfwr2pEA4F8nDGQfibG</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect btn-flat"><i class="material-icons left">close</i>Close</a>
+    </div>
+  </div>
+
+  <!-- Modal Bet -->
+  <div id="bet1" class="modal">
+    <div class="modal-content">
+      <h4 class="centered">Place your bet</h4>
+      <p class="caption">
+        Choose your lucky number.
+      </p>
+
+      <div class="row">
+        <form class="col s12">
+          <!-- <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">account_circle</i>
+              <select id="accounts_dropdown" class=""></select>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="input-field col s6">
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_0" value="0" />
+                <label for="pick_0">0 (zero)</label>
+              </p>
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_1" value="1" />
+                <label for="pick_1">1 (one)</label>
+              </p>
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_2" value="2" />
+                <label for="pick_2">2 (two)</label>
+              </p>
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_3" value="3" />
+                <label for="pick_3">3 (three)</label>
+              </p>
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_4" value="4" />
+                <label for="pick_4">4 (four)</label>
+              </p>
+              <!-- <p>
+                <input type="checkbox" id="pick_0" />
+                <label for="pick_0">0</label>
+              </p>
+              <p>
+                <input type="checkbox" id="pick_1" />
+                <label for="pick_1">1</label>
+              </p>
+              <p>
+                <input type="checkbox" id="pick_2" />
+                <label for="pick_2">2</label>
+              </p>
+              <p>
+                <input type="checkbox" id="pick_3" />
+                <label for="pick_3">3</label>
+              </p>
+              <p>
+                <input type="checkbox" id="pick_4" />
+                <label for="pick_4">4</label>
+              </p> -->
+            </div>
+            <div class="input-field col s6">
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_5" value="5" />
+                <label for="pick_5">5 (five)</label>
+              </p>
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_6" value="6" />
+                <label for="pick_6">6 (six)</label>
+              </p>
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_7" value="7" />
+                <label for="pick_7">7 (seven)</label>
+              </p>
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_8" value="8" />
+                <label for="pick_8">8 (eight)</label>
+              </p>
+              <p>
+                <input class="with-gap" name="bet_pick" type="radio" id="pick_9" value="9" />
+                <label for="pick_9">9 (nine)</label>
+              </p>
+              <!-- <p>
+                <input type="checkbox" id="pick_5" />
+                <label for="pick_5">5</label>
+              </p>
+              <p>
+                <input type="checkbox" id="pick_6" />
+                <label for="pick_6">6</label>
+              </p>
+              <p>
+                <input type="checkbox" id="pick_7" />
+                <label for="pick_7">7</label>
+              </p>
+              <p>
+                <input type="checkbox" id="pick_8" />
+                <label for="pick_8">8</label>
+              </p>
+              <p>
+                <input type="checkbox" id="pick_9" />
+                <label for="pick_9">9</label>
+              </p> -->
+            </div>
+          </div>
+          <div class="row" id="confirmations">
+            <div class="col s12">
+              <div class="progress blue lighten-4">
+                  <div class="indeterminate orange lighten-2"></div>
+              </div>
+              <span class="wait_transaction right">Wainting transaction to be confirmed.</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <!-- <a class="waves-effect waves-light red lighten-2 btn left modal-action modal-close" ><i class="material-icons left">cancel</i>cancel</a> -->
+      <a class="waves-effect waves-light orange lighten-2 btn right" id="bet-btn"><i class="material-icons left">control_point</i>place bet</a>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l12 s12">
+          <p class="grey-text text-lighten-4">We hope you have made some ether using Lotthereum!</p>
+          <!-- <p class="grey-text text-lighten-4">If you want to support the team, send us over a donation! Any amount would help support and continue development on this project and is greatly appreciated.</p>
+          <a class="waves-effect waves btn orange lighten-2 modal-trigger" href="#donate1"><i class="material-icons left">attach_money</i>DONATE NOW</a>
+          <a class="waves-effect waves btn orange lighten-2 right" href="https://github.com/lotthereum/source" target="_blank"><i class="material-icons left">code</i>SOURCE CODE</a> -->
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      2017
+      <a class="grey-text text-lighten-4 right" href="#!">Lotthereum</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- template -->
+  <div id="round_placeholder_template" class=template>
+    <div id="round_{round_id}_holder"></div>
+  </div>
+
+  <!-- template -->
+  <div id="round_template" class=template>
+    <div id="round_{round_id}" class="card {color} z-depth-1 round">
+      {betButton}
+
+      <div class="card-content white-text">
+
+        <span class="card-title"><i class="material-icons">lock</i> Round {round_id}</span>
+
+        <table class="centered round-data">
+          <tbody>
+            <tr>
+              <td>{prize} ether prize</td>
+              <td>{minAmount} ether per bet</td>
+              <td>{numberOfBets} bets placed</td>
+              <td>{remaining} bets remaining</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="progress blue lighten-4">
+            <div class="determinate orange lighten-2" style="width: {progress}%"></div>
+        </div>
+
+        <!-- bets -->
+        <ul id="round_{round_id}_bets" class="collection">{bets}</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- template -->
+  <script type="text/html" id="bet_template">
+    <li id="bet_{bet_id}" class="collection-item avatar {win}">
+      <div class="eth-address" style="">{origin}</div>
+      <span class="title flow-text">{origin}</span>
+      <p class="secondary-content title">{amount} ether</p>
+      <!-- <span class="confirmation-badge new badge blue lighten-2" data-badge-caption="confirmations">0</span> -->
+    </li>
+  </script>
+
+  <!-- template -->
+  <script type="text/html" id="bet_button_template">
+    <a class="btn-floating halfway-fab orange lighten-2 bet-btn pulse modal-trigger" href="#bet1"><i class="material-icons">add</i></a>
+  </script>
+
+  <!-- template -->
+  <script type="text/html" id="bet_number_template">
+    <a class="btn-floating halfway-fab bet-btn tooltipped modal-trigger {color} lighten-2 valign-wrapper center-align number" data-position="bottom" data-delay="50" data-tooltip="{number}">{number}</a>
+  </script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-102257280-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/bower_components/materialize/bin/materialize.js"></script>
+  <script src="/bower_components/bignumber.js/bignumber.js"></script>
+  <script src="/bower_components/crypto-js/index.js"></script>
+  <script src="/bower_components/web3/dist/web3.js"></script>
+  <script src="/bower_components/web3/dist/web3.min.js"></script>
+  <script src="/bower_components/blockies/blockies.js"></script>
+  <script src="/bower_components/async/dist/async.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- Ethereum Web3 API -->
+  <script type="text/javascript">
+    window.addEventListener('load', function() {
+      // window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+
+      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+      if (typeof web3 !== 'undefined') {
+        // Use Mist/MetaMask's provider
+        window.web3 = new Web3(web3.currentProvider);
+      } else {
+        console.log('No web3? You should consider trying MetaMask!')
+        // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+        window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+      }
+
+      // Net check
+      web3.version.getNetwork((err, netId) => {
+        switch (netId) {
+          case "1":
+            console.log('This is mainnet')
+            break
+          case "2":
+            console.log('This is the deprecated Morden test network.')
+            break
+          case "3":
+            console.log('This is the ropsten test network.')
+            break
+          default:
+            console.log('This is an unknown network.')
+        }
+      });
+
+      g = new Game(0);
+    })
+  </script>
+
+  <!-- build:js scripts/main.js -->
+  <!-- <script src="scripts/main.js"></script> -->
+  <script src="scripts/round.js"></script>
+  <!-- endbuild -->
+
+  </body>
+</html>
