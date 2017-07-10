@@ -244,3 +244,8 @@ body {
 .tab.disabled a {
   color: #c1c1c1 !important;
 }
+
+#bet1 .modal-content {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}

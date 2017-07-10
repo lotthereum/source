@@ -63,7 +63,8 @@ function Round(game, contractInstance, id) {
                 }
                 if (self.numberOfBets < 1) {
                     self.initialized = true;
-                    self.game.renderRound(self.id);
+                    self.game.renderRoundIfInitialized(self.id);
+                    // self.game.renderRound(self.id);
                 }
 
                 done(null, self.progress);
@@ -187,10 +188,13 @@ function Bet(round, betId) {
 function Game() {
     this.contract = web3.eth.contract([{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundMinAmountByBet','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[],'name':'getBalance','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'_a','type':'bytes32'}],'name':'getNumber','outputs':[{'name':'','type':'uint8'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'roundId','type':'uint256'},{'name':'betId','type':'uint256'}],'name':'getRoundBetNumber','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundPrize','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':false,'inputs':[],'name':'withdraw','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':false,'inputs':[],'name':'kill','outputs':[],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundMaxNumberOfBets','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[],'name':'getCurrentRoundId','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundOpen','outputs':[{'name':'','type':'bool'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundNumber','outputs':[{'name':'','type':'uint8'}],'payable':false,'type':'function'},{'constant':true,'inputs':[],'name':'getBlockPointer','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'roundId','type':'uint256'},{'name':'betId','type':'uint256'}],'name':'getRoundBetAmount','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundBlockNumber','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'id','type':'uint256'}],'name':'getRoundNumberOfBets','outputs':[{'name':'','type':'uint256'}],'payable':false,'type':'function'},{'constant':true,'inputs':[{'name':'roundId','type':'uint256'},{'name':'betId','type':'uint256'}],'name':'getRoundBetOrigin','outputs':[{'name':'','type':'address'}],'payable':false,'type':'function'},{'constant':false,'inputs':[{'name':'bet','type':'uint8'}],'name':'bet','outputs':[{'name':'','type':'bool'}],'payable':true,'type':'function'},{'constant':true,'inputs':[{'name':'i','type':'uint256'}],'name':'getBlockHash','outputs':[{'name':'blockHash','type':'bytes32'}],'payable':false,'type':'function'},{'inputs':[{'name':'_blockPointer','type':'uint256'},{'name':'_maxNumberOfBets','type':'uint256'},{'name':'_minAmountByBet','type':'uint256'},{'name':'_prize','type':'uint256'},{'name':'_hash','type':'bytes32'}],'payable':false,'type':'constructor'},{'payable':true,'type':'fallback'},{'anonymous':false,'inputs':[{'indexed':true,'name':'id','type':'uint256'},{'indexed':false,'name':'maxNumberOfBets','type':'uint256'},{'indexed':false,'name':'minAmountByBet','type':'uint256'}],'name':'RoundOpen','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'name':'id','type':'uint256'},{'indexed':false,'name':'number','type':'uint8'},{'indexed':false,'name':'blockNumber','type':'uint256'},{'indexed':false,'name':'blockHash','type':'bytes32'}],'name':'RoundClose','type':'event'},{'anonymous':false,'inputs':[{'indexed':false,'name':'maxNumberOfBets','type':'uint256'}],'name':'MaxNumberOfBetsChanged','type':'event'},{'anonymous':false,'inputs':[{'indexed':false,'name':'minAmountByBet','type':'uint256'}],'name':'MinAmountByBetChanged','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'name':'origin','type':'address'},{'indexed':false,'name':'roundId','type':'uint256'},{'indexed':false,'name':'betId','type':'uint256'}],'name':'BetPlaced','type':'event'},{'anonymous':false,'inputs':[{'indexed':true,'name':'winnerAddress','type':'address'},{'indexed':false,'name':'amount','type':'uint256'}],'name':'RoundWinner','type':'event'}]);
 
-    this.contractInstance = this.contract.at('0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c');
+    this.contractInstance = this.contract.at('0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c');  // ropsten 
+    // this.contractInstance = this.contract.at('0x1489bd836c3883ef265b1f5ca70bd8bec3246a39');
 
     var self = this;
     this.init = function () {
+        this.startLoading();
+        $('#rounds').html('');
         self.currentRoundId = -1
         self.rounds = [];
         self.accounts = [];
@@ -219,11 +223,31 @@ function Game() {
     };
 
     this.initEvents = function () {
-        var triggered = false;
-        this.betPlacedEvent = self.contractInstance.BetPlaced();
-        this.betPlacedEvent.watch(function(error, event){
-        console.log('event origin: ' + event.args.origin);
-        if (triggered) {
+        self.betPlacedEvent = self.contractInstance.BetPlaced();
+        self.betPlacedEvent.watch(self.betPlaced);
+
+        self.roundCloseEvent = self.contractInstance.RoundClose();
+        self.roundCloseEvent.watch(self.roundClose);
+
+        self.roundOpenEvent = self.contractInstance.RoundOpen();
+        self.roundOpenEvent.watch(self.roundOpen);
+    }
+
+    this.roundClose = function (error, event) {
+        console.log('round closed: ' + event.args.id);
+        Materialize.toast('Round #' + event.args.id + ' closed!', 5000, 'rounded');
+    }
+
+    this.roundOpen = function (error, event) {
+        console.log('round opened: ' + event.args.id);
+        Materialize.toast('Round #' + event.args.id + ' opened!', 5000, 'rounded');
+        self.init();
+    }
+
+    this.betPlacedDispatched = false;
+    this.betPlaced = function (error, event) {
+        if (self.betPlacedDispatched) {
+            console.log('betPlaced event origin: ' + event.args.origin);
             if (event.args.origin == self.account) {
                 $('#bet1').modal('close');
                 $('#bet-btn').removeClass('disabled');
@@ -232,15 +256,16 @@ function Game() {
             Materialize.toast('New bet placed', 5000, 'rounded');
             self.rounds[event.args.roundId].init();
         }
-        triggered = true;
-        });
+        console.log('betPlacedDispatched');
+        self.betPlacedDispatched = true;
     }
 
     this.renderRoundIfInitialized = function (id) {
-        this.rounds[id].rendered++;
-        if (this.rounds[id].rendered >= this.rounds[id].numberOfBets) {
+        self.rounds[id].rendered++;
+        if (self.rounds[id].rendered >= self.rounds[id].numberOfBets) {
             self.rounds[id].initialized = true;
-            this.renderRound(id);
+            self.renderRound(id);
+            self.rounds[id].rendered = 0;
         }
     }
 
@@ -251,42 +276,42 @@ function Game() {
         // var html = $('#round_template div:first').html();
         var html = $('#round_template').html();
         html = html.replace(/{round_id}/g, id);
-        if (this.rounds[id].open) {
+        if (self.rounds[id].open) {
             html = html.replace('>lock<', '>lock_open<');
             html = html.replace('{color}', 'blue');
             html = html.replace('{betButton}', $('#bet_button_template').html());
         } else {
             html = html.replace('{color}', 'grey lighten-1');
         }
-        html = html.replace(/{prize}/g, this.rounds[id].prize);
-        html = html.replace('{minAmount}', this.rounds[id].minAmount);
-        html = html.replace('{minAmount}', this.rounds[id].minAmount);
-        html = html.replace('{numberOfBets}', this.rounds[id].numberOfBets)
-        html = html.replace('{remaining}', this.rounds[id].remaining)
-        html = html.replace('{progress}', this.rounds[id].progress)
+        html = html.replace(/{prize}/g, self.rounds[id].prize);
+        html = html.replace('{minAmount}', self.rounds[id].minAmount);
+        html = html.replace('{minAmount}', self.rounds[id].minAmount);
+        html = html.replace('{numberOfBets}', self.rounds[id].numberOfBets)
+        html = html.replace('{remaining}', self.rounds[id].remaining)
+        html = html.replace('{progress}', self.rounds[id].progress)
 
         // render bets
         var bets_html = ''
         var has_winner = false;
-        for (var j = this.rounds[id].bets.length-1; j >= 0; j--) {
+        for (var j = self.rounds[id].bets.length-1; j >= 0; j--) {
             var bet_html = $('#bet_template').html();
 
-            if ((!this.rounds[id].open) && (this.rounds[id].bets[j].bet == this.rounds[id].number)) {
+            if ((!self.rounds[id].open) && (self.rounds[id].bets[j].bet == self.rounds[id].number)) {
                 bet_html = bet_html.replace(' {win}', ' green lighten-3');
                 has_winner = true;
             } else {
                 bet_html = bet_html.replace(' {win}', '');
             } 
 
-            bet_html = bet_html.replace(/{bet_id}/g, this.rounds[id].bets[j].id);
-            bet_html = bet_html.replace(/{origin}/g, this.rounds[id].bets[j].origin);
-            bet_html = bet_html.replace(/{amount}/g, this.rounds[id].bets[j].amount);
+            bet_html = bet_html.replace(/{bet_id}/g, self.rounds[id].bets[j].id);
+            bet_html = bet_html.replace(/{origin}/g, self.rounds[id].bets[j].origin);
+            bet_html = bet_html.replace(/{amount}/g, self.rounds[id].bets[j].amount);
             bets_html += bet_html;
         }
         html = html.replace('{bets}', bets_html);
 
-        if (!this.rounds[id].open) {
-            var btnHtml = $('#bet_number_template').html().replace(/{number}/g, this.rounds[id].number);
+        if (!self.rounds[id].open) {
+            var btnHtml = $('#bet_number_template').html().replace(/{number}/g, self.rounds[id].number);
             if (has_winner) {
                 btnHtml = btnHtml.replace('{color}', 'green');
                 html = html.replace('{betButton}', btnHtml);
@@ -302,16 +327,32 @@ function Game() {
 
         if (self.areAllRoundsInitialed()) {
             console.log('INITIALIZED!!!!');
-            self.renderAllIdenticons();
-            $('.tooltipped').tooltip({delay: 60});
-            $('.page-footer').css('display', 'block');
-            $('.main-container').css('display', 'block');
-            $('#loading').hide();
-            $('#avatar').css('display', 'block');
-            $('.navbar-fixed').css('display', 'block');
-            $('.nav-wrapper').css('background', '#2196F3');
-            $('ul.tabs').tabs('select_tab', 'bet001');
+            self.stopLoading();
         }
+    }
+
+    this.stopLoading = function () {
+        self.renderAllIdenticons();
+        $('.tooltipped').tooltip({delay: 60});
+        $('#loading').hide();
+        $('.page-footer').css('display', 'block');
+        $('.main-container').css('display', 'block');
+        $('#avatar').css('display', 'block');
+        $('.navbar-fixed').css('display', 'block');
+        $('.nav-wrapper').css('background', '#2196F3');
+        // for (var i = 0; i <= self.currentRoundId; i++) {
+        //     self.rounds[i].initialized = false;
+        // }
+    }
+
+    this.startLoading = function () {
+        $('#loading').show();
+        $('.page-footer').css('display', 'none');
+        $('.main-container').css('display', 'none');
+        $('#avatar').css('display', 'none');
+        $('.navbar-fixed').css('display', 'none');
+        $('.nav-wrapper').css('background', 'white');
+        $('ul.tabs').tabs('select_tab', 'bet001');
     }
 
     this.areAllRoundsInitialed = function () {
@@ -437,11 +478,11 @@ function Game() {
     }
 
     this.placeBet = function (bet) {
-        var value = this.rounds[this.currentRoundId].minAmount * 1000000000000000000
+        var value = self.rounds[self.currentRoundId].minAmount * 1000000000000000000
         var gas = 500000;
         console.log('sending from: ' + self.account)
 
-        this.contractInstance.bet(bet, {from: self.account, value: value, gas: gas}, function(error, result) {
+        self.contractInstance.bet(bet, {from: self.account, value: value, gas: gas}, function(error, result) {
             $('#bet-btn').addClass('disabled');
             // $('#confirmations').css('opacity', 1);
             Materialize.fadeInImage('#confirmations');
@@ -486,6 +527,7 @@ function Game() {
             }
             $('#avatar, .tabs, #dropdown-nav').css('opacity', opacity);
         });
+        $('ul.tabs').tabs('select_tab', 'bet001');
     }
 
     this.init();

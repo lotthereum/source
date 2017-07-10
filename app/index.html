@@ -139,7 +139,7 @@
       <h4>How does Lotthereum works</h4>
       <p>Every round has a fixed prize, a fixed value per bet and a fixed number of participants.</p>
       <p>When the last bet is placed the contract will close the round and pick the lucky number.</p>
-      <p>The prize is divided equally by all winners and transfered to the players accounts automatically.</p>
+      <p>The prize is divided equally by all winners.</p>
     </div>
     <div class="modal-footer">
       <a class="modal-action modal-close waves-effect btn-flat"><i class="material-icons left">done</i>Close</a>
@@ -283,7 +283,7 @@
               <div class="progress blue lighten-4">
                   <div class="indeterminate orange lighten-2"></div>
               </div>
-              <span class="wait_transaction right">Wainting transaction to be confirmed.</span>
+              <span class="wait_transaction right">Waiting transaction to be confirmed.</span>
             </div>
           </div>
         </form>
@@ -312,12 +312,12 @@
     </div>
   </footer>
 
-  <!-- template -->
+  <!-- placeholder template -->
   <div id="round_placeholder_template" class=template>
     <div id="round_{round_id}_holder"></div>
   </div>
 
-  <!-- template -->
+  <!-- rond template -->
   <div id="round_template" class=template>
     <div id="round_{round_id}" class="card {color} z-depth-1 round">
       {betButton}
@@ -348,7 +348,7 @@
     </div>
   </div>
 
-  <!-- template -->
+  <!-- bet template -->
   <script type="text/html" id="bet_template">
     <li id="bet_{bet_id}" class="collection-item avatar {win}">
       <div class="eth-address" style="">{origin}</div>
@@ -358,14 +358,14 @@
     </li>
   </script>
 
-  <!-- template -->
+  <!-- bet button template -->
   <script type="text/html" id="bet_button_template">
     <a class="btn-floating halfway-fab orange lighten-2 bet-btn pulse modal-trigger" href="#bet1"><i class="material-icons">add</i></a>
   </script>
 
-  <!-- template -->
+  <!-- bet number template -->
   <script type="text/html" id="bet_number_template">
-    <a class="btn-floating halfway-fab bet-btn tooltipped modal-trigger {color} lighten-2 valign-wrapper center-align number" data-position="bottom" data-delay="50" data-tooltip="{number}">{number}</a>
+    <a class="btn-floating halfway-fab bet-btn modal-trigger {color} lighten-2 valign-wrapper center-align number">{number}</a>
   </script>
 
   <!-- Google Analytics -->
