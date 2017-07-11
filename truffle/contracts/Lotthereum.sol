@@ -14,6 +14,7 @@ contract Lotthereum is Mortal {
     Round[] private rounds;
     mapping (uint => Bet[]) bets;
     mapping (address => uint) private balances;
+    mapping (uint => address[]) winners;
 
     struct Round {
         uint id;
@@ -67,8 +68,17 @@ contract Lotthereum is Mortal {
     function payout() internal {
         for (uint i = 0; i < bets[currentRound].length; i++) {
             if (bets[currentRound][i].bet == rounds[currentRound].number) {
-                balances[bets[currentRound][i].origin] += rounds[currentRound].prize;
-                RoundWinner(bets[currentRound][i].origin, rounds[currentRound].prize);
+                uint id = winners[currentRound].length;
+                winners[currentRound].length += 1;
+                winners[currentRound][id] = bets[currentRound][i].origin;
+            }
+        }
+
+        if (winners[currentRound].length > 0) {
+            uint prize = rounds[currentRound].prize / winners[currentRound].length;
+            for (i = 0; i < winners[currentRound].length; i++) {
+                balances[winners[currentRound][i]] += prize;
+                RoundWinner(winners[currentRound][i], prize);
             }
         }
     }
@@ -139,7 +149,7 @@ contract Lotthereum is Mortal {
     }
 
     function withdraw() public returns (uint) {
-        uint amount = this.getBalance();
+        uint amount = getBalance();
         if (amount > 0) {
             balances[msg.sender] = 0;
             msg.sender.transfer(amount);

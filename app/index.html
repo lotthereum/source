@@ -2,7 +2,9 @@
 <html lang="">
   <head>
     <meta charset="utf-8">
-    <meta name="description" content="">
+    <meta name="description" content="Open source decentralized Ethereum blockchain based lottery">
+    <meta name="keywords" content="Ethereum,Blockchain,Lottery,Decentralized,Open Source">
+    <meta name="author" content="lotthereum.github.io">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Lotthereum</title>
 
@@ -38,7 +40,7 @@
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
-        <a href="#about1" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="About Lotthereum"><img src="/images/icons-72x72.png" class="logo"></a>
+        <a href="#intro"><img src="/images/icons-72x72.png" class="logo"></a>
         <a class="brand-logo modal-trigger center" href="#about1">Lotthereum</a>
       </div>
     </nav>
@@ -51,10 +53,10 @@
 
       <ul class="tabs tabs-fixed-width main-navbar">
         <li class="tab col s2"><a class="active" href="#bet001">0.1 eth</a></li>
-        <li class="tab col s2 disabled"><a href="#bet025" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Not available">0.25 eth</a></li>
-        <li class="tab col s2 disabled"><a href="#bet050" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Coming soon">0.5 eth</a></li>
-        <li class="tab col s2 disabled"><a href="#bet075" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Maybe next time">0.75 eth</a></li>
-        <li class="tab col s2 disabled"><a href="#bet100" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Not so fast">1 eth</a></li>
+        <li class="tab col s2"><a href="#bet025">0.25 eth</a></li>
+        <li class="tab col s2"><a href="#bet050">0.5 eth</a></li>
+        <li class="tab col s2"><a href="#bet075">0.75 eth</a></li>
+        <li class="tab col s2"><a href="#bet100">1 eth</a></li>
         <li class="tab col s2"><a href="#withdraw"><span class="new badge balance" data-badge-caption="ETH"></span>Withdraw</a></li>
       </ul>
 
@@ -68,29 +70,126 @@
 
   <div class="container main-container">
 
+    <!-- <div id="intro" class="row">
+      <div class="col s12 m12">
+        <div class="card green lighten-2 z-depth-1 round">
+          <a id="close-intro-btn" class="btn-floating halfway-fab orange lighten-2 bet-btn" href="#!"><i class="material-icons">done</i></a>
+          <div class="card-content white-text">
+            <span class="card-title"><i class="material-icons">done_all</i> Lotthereum</span>
+            <ul class="collection">
+              <li class="collection-item">1st smart contract lottery <string>without</string> fees</li>
+              <li class="collection-item">Players bet against each other and not againt the house</li>
+              <li class="collection-item">Rounds results are imediatly after the last bet is placed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <div id="bet001" class="col s12">
       <div class="row">
         <div id="rounds" class="col s12 m12"></div>
       </div>
     </div>
+
     <div id="bet025" class="col s12">
       <div class="row">
-        <div id="rounds1" class="col s12 m12">0.25</div>
+        <div class="col s12 m12">
+          <div class="card grey lighten-1 z-depth-1 round">
+            <a class="btn-floating halfway-fab orange lighten-2 disabled bet-btn" href="#!"><i class="material-icons">add</i></a>
+            <div class="card-content white-text">
+              <span class="card-title"><i class="material-icons">lock</i> Round 0</span>
+              <table class="centered round-data">
+                <tbody>
+                  <tr>
+                    <td>2.5 ether prize</td>
+                    <td>0.25 ether per bet</td>
+                    <td>0 bets placed</td>
+                    <td>10 bets remaining</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="progress blue lighten-4">
+                <div class="determinate orange lighten-2" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="bet050" class="col s12">
       <div class="row">
-        <div id="rounds2" class="col s12 m12">0.5</div>
+        <div class="col s12 m12">
+          <div class="card grey lighten-1 z-depth-1 round">
+            <a class="btn-floating halfway-fab orange lighten-2 disabled bet-btn" href="#!"><i class="material-icons">add</i></a>
+            <div class="card-content white-text">
+              <span class="card-title"><i class="material-icons">lock</i> Round 0</span>
+              <table class="centered round-data">
+                <tbody>
+                  <tr>
+                    <td>5 ether prize</td>
+                    <td>0.5 ether per bet</td>
+                    <td>0 bets placed</td>
+                    <td>10 bets remaining</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="progress blue lighten-4">
+                <div class="determinate orange lighten-2" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="bet075" class="col s12">
       <div class="row">
-        <div id="rounds3" class="col s12 m12">0.75</div>
+        <div class="col s12 m12">
+          <div class="card grey lighten-1 z-depth-1 round">
+            <a class="btn-floating halfway-fab orange lighten-2 disabled bet-btn" href="#!"><i class="material-icons">add</i></a>
+            <div class="card-content white-text">
+              <span class="card-title"><i class="material-icons">lock</i> Round 0</span>
+              <table class="centered round-data">
+                <tbody>
+                  <tr>
+                    <td>7.5 ether prize</td>
+                    <td>0.75 ether per bet</td>
+                    <td>0 bets placed</td>
+                    <td>10 bets remaining</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="progress blue lighten-4">
+                <div class="determinate orange lighten-2" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="bet100" class="col s12">
       <div class="row">
-        <div id="rounds3" class="col s12 m12">1</div>
+        <div class="col s12 m12">
+          <div class="card grey lighten-1 z-depth-1 round">
+            <a class="btn-floating halfway-fab orange lighten-2 disabled bet-btn" href="#!"><i class="material-icons">add</i></a>
+            <div class="card-content white-text">
+              <span class="card-title"><i class="material-icons">lock</i> Round 0</span>
+              <table class="centered round-data">
+                <tbody>
+                  <tr>
+                    <td>10 ether prize</td>
+                    <td>1 ether per bet</td>
+                    <td>0 bets placed</td>
+                    <td>10 bets remaining</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="progress blue lighten-4">
+                <div class="determinate orange lighten-2" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="withdraw" class="col s12">
@@ -112,9 +211,16 @@
                 </tbody>
               </table>
 
-              <!-- <a class="waves-effect waves btn red" href="#!"><i class="material-icons left">cancel</i> CANCEL</a> -->
-              <a class="waves-effect waves btn green right" href="#!"><i class="material-icons left">attach_money</i> WITHDRAW</a>
+              <div id="withdraw-confirmations">
+                <span id="withdraw-transaction-id" class="right"></span>
+                <!-- <div class="progress blue lighten-4">
+                    <div class="indeterminate orange lighten-2"></div>
+                </div>
+                <span class="wait_transaction right">Waiting transaction to be confirmed.</span> -->
+              </div>
 
+              <!-- <a class="waves-effect waves btn red" href="#!"><i class="material-icons left">cancel</i> CANCEL</a> -->
+              <a id="withdraw-btn" class="waves-effect waves btn green" href="#!"><i class="material-icons left">attach_money</i> WITHDRAW</a>
             </div>
           </div>
         </div>
@@ -134,12 +240,18 @@
   </div>
 
   <!-- Modal About -->
-  <div id="about1" class="modal">
+  <div id="intro" class="modal">
     <div class="modal-content">
-      <h4>How does Lotthereum works</h4>
-      <p>Every round has a fixed prize, a fixed value per bet and a fixed number of participants.</p>
-      <p>When the last bet is placed the contract will close the round and pick the lucky number.</p>
-      <p>The prize is divided equally by all winners.</p>
+      <h4><i class="material-icons">done_all</i> Lotthereum</h4>
+      <ul class="collection">
+        <li class="collection-item">1st smart contract lottery <string>without</string> fees</li>
+        <li class="collection-item">No oracles or external contract transactions</li>
+        <li class="collection-item">Players bet against each other and not againt the house</li>
+        <li class="collection-item">Rounds results are imediatly after the last bet is placed</li>
+        <li class="collection-item">Every round has a fixed prize, a fixed value per bet, and a fixed number of participants.</li>
+        <li class="collection-item">The prize is divided equally by all winners</li>
+        <li class="collection-item">Prize is available right after the last bet is placed</li>
+      </ul>
     </div>
     <div class="modal-footer">
       <a class="modal-action modal-close waves-effect btn-flat"><i class="material-icons left">done</i>Close</a>
@@ -195,23 +307,23 @@
           <div class="row">
             <div class="input-field col s6">
               <p>
-                <input name="bet_pick" type="radio" id="pick_0" value="0" />
+                <input name="bet_pick" type="radio" id="pick_0" value="0"/>
                 <label for="pick_0">0 (zero)</label>
               </p>
               <p>
-                <input name="bet_pick" type="radio" id="pick_1" value="1" />
+                <input name="bet_pick" type="radio" id="pick_1" value="1"/>
                 <label for="pick_1">1 (one)</label>
               </p>
               <p>
-                <input name="bet_pick" type="radio" id="pick_2" value="2" />
+                <input name="bet_pick" type="radio" id="pick_2" value="2"/>
                 <label for="pick_2">2 (two)</label>
               </p>
               <p>
-                <input name="bet_pick" type="radio" id="pick_3" value="3" />
+                <input name="bet_pick" type="radio" id="pick_3" value="3"/>
                 <label for="pick_3">3 (three)</label>
               </p>
               <p>
-                <input name="bet_pick" type="radio" id="pick_4" value="4" />
+                <input name="bet_pick" type="radio" id="pick_4" value="4"/>
                 <label for="pick_4">4 (four)</label>
               </p>
               <!-- <p>
@@ -297,18 +409,22 @@
 
   <footer class="page-footer">
 
-    <!-- <div class="container">
+    <div class="container">
       <div class="row">
         <div class="col l12 s12">
-          <p class="grey-text text-lighten-4">We hope you have made some ether using Lotthereum!</p>
-          <p class="grey-text text-lighten-4">If you want to support the team, send us over a donation! Any amount would help support and continue development on this project and is greatly appreciated.</p>
-          <a class="waves-effect waves btn orange lighten-2 modal-trigger" href="#donate1"><i class="material-icons left">attach_money</i>DONATE NOW</a>
-          <a class="waves-effect waves btn orange lighten-2 right" href="https://github.com/lotthereum/source" target="_blank"><i class="material-icons left">code</i>SOURCE CODE</a>
+          <p class="grey-text text-lighten-4 center-align">
+            <!-- <span class="title right">We hope you have made some ether using Lotthereum!</span> -->
+          </p>
+          <!-- <p class="grey-text text-lighten-4">If you want to support the team, send us over a donation! Any amount would help support and continue development on this project and is greatly appreciated.</p>
+          <a class="waves-effect waves btn orange lighten-2 modal-trigger" href="#donate1"><i class="material-icons left">attach_money</i>DONATE NOW</a> -->
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="footer-copyright">
-      <div class="container">2017 <a class="grey-text text-lighten-4 right" href="#!">Lotthereum</a></div>
+      <div class="container">
+        <a class="grey-text text-lighten-4 left" href="#!">2017 Lotthereum</a>
+        <a class="waves-effect waves btn orange lighten-2 right" href="https://etherscan.io/address/0x5e6ed16d845a46b9f863a256e7a3194f2a9e8b5c#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a>
+      </div>
     </div>
   </footer>
 
@@ -394,8 +510,6 @@
   <!-- Ethereum Web3 API -->
   <script type="text/javascript">
     window.addEventListener('load', function() {
-      // window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-
       // Checking if Web3 has been injected by the browser (Mist/MetaMask)
       if (typeof web3 !== 'undefined') {
         // Use Mist/MetaMask's provider
@@ -408,22 +522,28 @@
 
       // Net check
       web3.version.getNetwork((err, netId) => {
+        window.contract_address = '0x2f0d0b1dfcfa33e7d786b89d4fa0a731cebd8916';
         switch (netId) {
           case "1":
             console.log('This is mainnet')
+            // window.contract_address = '0x5e6ed16d845a46b9f863a256e7a3194f2a9e8b5c'  // 1 main
+            window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 2 main
             break
           case "2":
             console.log('This is the deprecated Morden test network.')
             break
           case "3":
             console.log('This is the ropsten test network.')
+            // window.contract_address = '0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c'  // 1
+            // window.contract_address = '0x9e97ec0421b8d3c2d818d02b8dbe59c7f90affc6'  // 2
+            window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 3
             break
           default:
             console.log('This is an unknown network.')
         }
+        console.log('Contract address: ' + window.contract_address)
+        g = new Game(0);
       });
-
-      g = new Game(0);
     })
   </script>
 
