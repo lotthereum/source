@@ -26,7 +26,7 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/materialize.css" media="screen,projection" />
-    <link rel="stylesheet" href="styles/emoji.css" />
+    <!-- <link rel="stylesheet" href="styles/emoji.css" /> -->
     <!-- endbuild -->
 
     <!--Import Google Icon Font-->
@@ -208,6 +208,11 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col s12 m12 center-align">
+          <a id="place-your-bet" class="waves-effect waves btn orange lighten-2 pulse" href="#!"><i class="material-icons left">play_arrow</i> Place your bet</a>
+        </div>
+      </div>
     </div>
     <div id="withdraw" class="col s12">
       <div class="row">
@@ -280,6 +285,27 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect btn-flat"><i class="material-icons left">close</i>Close</a>
+    </div>
+  </div>
+
+  <!-- Modal Alert -->
+  <div id="alert1" class="modal">
+    <div class="modal-content">
+      <h4 class="centered">Account not found</h4>
+      <div id="using-mist-metamask" class="alert-note">
+        <blockquote>
+          You are using MetaMask, Mist or another web3 compatible browser, but your account is locked or not authorized to interact with Lotthereum.
+        </blockquote>
+        <blockquote>
+          Unluck or authorize your account and refresh the page.
+        </blockquote>
+      </div>
+      <blockquote id="using-localhost" class="alert-note">
+        You are connected to http://localhost:8545 but there are no accounts available.
+      </blockquote>
     </div>
     <div class="modal-footer">
       <a class="modal-action modal-close waves-effect btn-flat"><i class="material-icons left">close</i>Close</a>
@@ -490,10 +516,12 @@
         if (typeof web3 !== 'undefined') {
             // Use Mist/MetaMask's provider
             window.web3 = new Web3(web3.currentProvider);
+            $('#using-mist-metamask').css('display', 'block');
         } else {
             console.log('No web3? You should consider trying MetaMask!')
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
             window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+            $('#using-localhost').css('display', 'block');
         }
 
         // Net check

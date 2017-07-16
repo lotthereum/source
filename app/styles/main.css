@@ -272,3 +272,7 @@ body {
 .gitter-chat-embed {
   z-index: 1000;
 }
+
+.alert-note {
+  display: none;
+}

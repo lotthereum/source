@@ -299,7 +299,7 @@ function Game() {
         $('#loading').hide();
         $('.page-footer').css('display', 'block');
         $('.main-container').css('display', 'block');
-        $('#avatar').css('display', 'block');
+        // $('#avatar').css('display', 'block');
         $('.navbar-fixed').css('display', 'block');
         $('.nav-wrapper').css('background', '#2196F3');
         
@@ -319,7 +319,7 @@ function Game() {
         $('#loading').show();
         $('.page-footer').css('display', 'none');
         $('.main-container').css('display', 'none');
-        $('#avatar').css('display', 'none');
+        // $('#avatar').css('display', 'none');
         $('.navbar-fixed').css('display', 'none');
         $('.nav-wrapper').css('background', 'white');
 
@@ -387,8 +387,12 @@ function Game() {
                 $('#dropdown-nav').append('<li class="valign-wrapper"><a href="#!' + _account + '" class="accounts_dropdown_item"><div class="eth-address square">' + _account + '</div> ' + _account + '</a></li>');
             });
 
-            if (self.account == null) {
+            if (account != null) {
                 self.changeAccount(account)
+                $('#avatar').css('display', 'block');
+            } else {
+                console.log('No accounts found!');
+                $('#alert1').modal('open');
             }
 
             // $('#accounts_dropdown').on('change', function () {
@@ -500,4 +504,7 @@ $(document).ready(function() {
         $('ul.tabs').tabs('select_tab', 'intro1');
     });
     $('.main-container').css('display', 'block');
+    $('#place-your-bet').click(function() {
+        $('ul.tabs').tabs('select_tab', 'bet001');
+    });
 });
