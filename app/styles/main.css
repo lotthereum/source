@@ -66,8 +66,8 @@ body {
 }
 
 .nav-wrapper {
-  /*background: #2196F3;*/
-  background: white;
+  background: #2196F3;
+  /*background: white;*/
 }
 
 .progress {
@@ -84,7 +84,7 @@ body {
 }
 
 .page-footer {
-  display: none;
+  /*display: none;*/
   margin-top: 50px;
   background: #43c5ff !important;
   margin-top: 10px;
@@ -144,6 +144,7 @@ body {
 }
 
 #loading {
+  display: none;
   text-align: center;
   padding: 5%;
 }
@@ -219,7 +220,7 @@ body {
 }
 
 .navbar-fixed {
-  display: none;
+  /*display: none;*/
 }
 
 .balance {

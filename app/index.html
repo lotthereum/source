@@ -26,7 +26,7 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/materialize.css" media="screen,projection" />
-    <!-- <link rel="stylesheet" href="styles/emoji.css" /> -->
+    <link rel="stylesheet" href="styles/emoji.css" />
     <!-- endbuild -->
 
     <!--Import Google Icon Font-->
@@ -41,7 +41,7 @@
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
-        <a href="#intro"><img src="/images/icons-72x72.png" class="logo"></a>
+        <a id="logo-btn" href="#lotthereum"><img src="/images/icons-72x72.png" class="logo"></a>
         <a class="brand-logo modal-trigger center" href="#about1">Lotthereum</a>
       </div>
     </nav>
@@ -53,7 +53,8 @@
     </ul>
 
       <ul class="tabs tabs-fixed-width main-navbar">
-        <li class="tab col s2"><a class="active" href="#bet001">0.1 eth</a></li>
+        <li class="tab col s2"><a class="active" href="#intro1">Lotthereum</a></li>
+        <li class="tab col s2"><a href="#bet001">0.1 eth</a></li>
         <li class="tab col s2"><a href="#bet025">0.25 eth</a></li>
         <li class="tab col s2"><a href="#bet050">0.5 eth</a></li>
         <li class="tab col s2"><a href="#bet075">0.75 eth</a></li>
@@ -71,28 +72,11 @@
 
   <div class="container main-container">
 
-    <!-- <div id="intro" class="row">
-      <div class="col s12 m12">
-        <div class="card green lighten-2 z-depth-1 round">
-          <a id="close-intro-btn" class="btn-floating halfway-fab orange lighten-2 bet-btn" href="#!"><i class="material-icons">done</i></a>
-          <div class="card-content white-text">
-            <span class="card-title"><i class="material-icons">done_all</i> Lotthereum</span>
-            <ul class="collection">
-              <li class="collection-item">1st smart contract lottery <string>without</string> fees</li>
-              <li class="collection-item">Players bet against each other and not againt the house</li>
-              <li class="collection-item">Rounds results are imediatly after the last bet is placed</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <div id="bet001" class="col s12">
       <div class="row">
         <div id="rounds" class="col s12 m12"></div>
       </div>
     </div>
-
     <div id="bet025" class="col s12">
       <div class="row">
         <div class="col s12 m12">
@@ -193,6 +177,38 @@
         </div>
       </div>
     </div>
+    <div id="intro1" class="col s12">
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="card green lighten-2 z-depth-1 round">
+            <div class="card-content white-text">
+              <ul class="collection with-header">
+                <li class="collection-header"><h5><i class="material-icons">question_answer</i> How does Lotthereum works?</h5></li>
+                <li class="collection-item"><i class="material-icons left">looks_one</i> Players have to guess a number between 0-9</li>
+                <li class="collection-item"><i class="material-icons left">looks_two</i> Every round has a fixed prize, a fixed value per bet, and a fixed number of participants</li>
+                <li class="collection-item"><i class="material-icons left">looks_3</i> The contract will reveal the lucky number right after the last bet is placed</li>
+                <li class="collection-item"><i class="material-icons left">looks_4</i> The prize is divided equally by all winners</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="card green lighten-2 z-depth-1 round">
+            <div class="card-content white-text">
+              <ul class="collection with-header">
+                <li class="collection-header"><h5><i class="material-icons">done_all</i> Lotthereum</h5></li>
+                <li class="collection-item"><i class="material-icons left">done</i> Lotthereum has NO fees <i class="em em-money_with_wings"></i></li>
+                <li class="collection-item"><i class="material-icons left">done</i> Lotthereum does NOT use oracles or external contract transactions <i class="em em-imp"></i></li>
+                <li class="collection-item"><i class="material-icons left">done</i> Lotthereum does NOT keep records or check IP addresses <i class="em em-mag"></i></li>
+                <!-- <li class="collection-item"><i class="material-icons left">done</i> Players bet against each other and not againt the house</li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="withdraw" class="col s12">
       <div class="row">
         <div class="col s12 m12">
@@ -238,28 +254,6 @@
       <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
     </ul> -->
 
-  </div>
-
-  <!-- Modal About -->
-  <div id="intro" class="modal">
-    <div class="modal-content">
-      <ul class="collection with-header">
-        <li class="collection-header"><h5><i class="material-icons">done_all</i> Lotthereum</h5></li>
-        <li class="collection-item"><i class="material-icons left">done</i> Lotthereum has NO fees <!-- <i class="em em-money_with_wings"></i> --></li>
-        <li class="collection-item"><i class="material-icons left">done</i> Lotthereum does NOT use oracles or external contract transactions <!-- <i class="em em-imp"></i> --></li>
-        <li class="collection-item"><i class="material-icons left">done</i> Lotthereum does NOT keep records or check IP addresses <!-- <i class="em em-mag"></i> --></li>
-        <!-- <li class="collection-item"><i class="material-icons left">done</i> Players bet against each other and not againt the house</li> -->
-      </ul>
-      <ul class="collection with-header">
-        <li class="collection-header"><h5><i class="material-icons">question_answer</i> How does Lotthereum works?</h5></li>
-        <li class="collection-item"><i class="material-icons left">looks_one</i> Players have to guess a number between 0-9</li>
-        <li class="collection-item"><i class="material-icons left">looks_two</i> Every round has a fixed prize, a fixed value per bet, and a fixed number of participants.</li>
-        <li class="collection-item"><i class="material-icons left">looks_3</i> The prize is divided equally by all winners right after the last bet is placed</li>
-      </ul>
-    </div>
-    <div class="modal-footer">
-      <a class="modal-action modal-close waves-effect btn green lighten-2"><i class="material-icons left">done</i>Close</a>
-    </div>
   </div>
 
   <!-- Modal Donations -->
@@ -477,48 +471,6 @@
   <!-- endbower -->
   <!-- endbuild -->
 
-  <!-- Ethereum Web3 API -->
-  <script type="text/javascript">
-    window.addEventListener('load', function() {
-      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-      if (typeof web3 !== 'undefined') {
-        // Use Mist/MetaMask's provider
-        window.web3 = new Web3(web3.currentProvider);
-      } else {
-        console.log('No web3? You should consider trying MetaMask!')
-        // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-        window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-      }
-
-      // Net check
-      web3.version.getNetwork((err, netId) => {
-        window.contract_address = '0xcb1baf4c1d7f2ff9242ea963d9f317b98fe09048';
-        switch (netId) {
-          case "1":
-            console.log('This is mainnet')
-            // window.contract_address = '0x5e6ed16d845a46b9f863a256e7a3194f2a9e8b5c'  // 1 main
-            // window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 2 main
-            window.contract_address = '0x3c563651318b6b2cf555207a1e611bb577fff446'  // 3 main
-            break
-          case "2":
-            console.log('This is the deprecated Morden test network.')
-            break
-          case "3":
-            console.log('This is the ropsten test network.')
-            // window.contract_address = '0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c'  // 1
-            // window.contract_address = '0x9e97ec0421b8d3c2d818d02b8dbe59c7f90affc6'  // 2
-            // window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 3
-            window.contract_address = '0x668143a1fc6c3a83a85c2fd20f3e51dac06fd3f3'  // 4
-            break
-          default:
-            console.log('This is an unknown network.')
-        }
-        console.log('Contract address: ' + window.contract_address)
-        // g = new Game(0);
-      });
-    })
-  </script>
-
   <!-- Gitter -->
   <script>
     ((window.gitter = {}).chat = {}).options = {
@@ -529,9 +481,49 @@
   <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 
   <!-- build:js scripts/main.js -->
-  <!-- <script src="scripts/main.js"></script> -->
   <script src="scripts/round.js"></script>
   <!-- endbuild -->
+
+  <script type="text/javascript">
+    window.addEventListener('load', function() {
+        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+        if (typeof web3 !== 'undefined') {
+            // Use Mist/MetaMask's provider
+            window.web3 = new Web3(web3.currentProvider);
+        } else {
+            console.log('No web3? You should consider trying MetaMask!')
+            // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+            window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+        }
+
+        // Net check
+        web3.version.getNetwork((err, netId) => {
+            window.contract_address = '0xcb1baf4c1d7f2ff9242ea963d9f317b98fe09048';
+            switch (netId) {
+                case '1':
+                    console.log('This is mainnet')
+                    // window.contract_address = '0x5e6ed16d845a46b9f863a256e7a3194f2a9e8b5c'  // 1 main
+                    // window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 2 main
+                    window.contract_address = '0x3c563651318b6b2cf555207a1e611bb577fff446'  // 3 main
+                    break
+                case '2':
+                    console.log('This is the deprecated Morden test network.')
+                    break
+                case '3':
+                    console.log('This is the ropsten test network.')
+                    // window.contract_address = '0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c'  // 1
+                    // window.contract_address = '0x9e97ec0421b8d3c2d818d02b8dbe59c7f90affc6'  // 2
+                    // window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 3
+                    window.contract_address = '0x668143a1fc6c3a83a85c2fd20f3e51dac06fd3f3'  // 4
+                    break
+                default:
+                    console.log('This is an unknown network.')
+            }
+            console.log('Contract address: ' + window.contract_address)
+            g = new Game(0);
+        });
+    })
+  </script>
 
   </body>
 </html>

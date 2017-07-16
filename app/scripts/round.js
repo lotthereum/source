@@ -135,52 +135,6 @@ function Bet(round, betId) {
             console.error(err);
         } else {
             self.game.renderRoundIfInitialized(self.roundId);
-
-            // console.log('id: ' + self.roundId + ' | numberOfBets: ' + self.round.numberOfBets + ' | bets length: ' + self.round.bets.length)
-            // if (self.round.numberOfBets == self.round.bets.length){
-            //     self.round.initialized = true;
-            //     self.game.renderRoundIfInitialized(self.roundId);
-            // }
-
-            // var d = true;
-            // for (var i = 0; i <= self.round.numberOfBets; i++) {
-            //     if (self.round.bets[i].initialized == false) {
-            //         d = false;
-            //     }
-            // }
-            // if (d) {
-            //     self.game.rounds[self.roundId].initialized = true;
-            //     self.game.renderRound(self.roundId);
-            // }
-
-            // self.game.renderRoundIfInitialized(self.roundId);
-
-            // if ((!self.game.rounds[self.roundId].initialized) && (self.game.rounds[self.roundId].numberOfBets == self.game.rounds[self.roundId].bets.length)) {
-            //     self.game.rounds[self.roundId].initialized = true;
-            //     self.game.renderRound(self.roundId);
-            // }
-
-            // var d = true;
-            // console.log(self.roundId + ': numberOfBets: ' + self.game.rounds[self.roundId].numberOfBets)
-            // for (var i = 0; i <= self.game.rounds[self.roundId].numberOfBets; i++) {
-            //     if (self.game.rounds[self.roundId].bets[i].initialized == false) {
-            //         d = false;
-            //     }
-            // }
-            // if (d){
-            //     self.game.rounds[self.roundId].initialized = true;
-            //     self.game.renderRound(self.roundId);
-            // }
-
-            // if (self.game.rounds[self.roundId].areAllBetsInitialed()) {
-            //     self.game.rounds[self.roundId].initialized = true;
-            //     self.game.renderRound(self.roundId);
-            // }
-
-            // if (self.game.rounds[self.roundId].bets.length - 1 == self.id) {
-            //     self.game.rounds[self.roundId].initialized = true;
-            //     self.game.renderRound(self.roundId);
-            // }
         }
     });
 }
@@ -194,7 +148,7 @@ function Game() {
 
     var self = this;
     this.init = function () {
-        this.startLoading();
+        // this.startLoading();
         $('#rounds').html('');
         self.currentRoundId = -1
         self.rounds = [];
@@ -342,7 +296,6 @@ function Game() {
 
     this.stopLoading = function () {
         self.renderAllIdenticons();
-        $('.tooltipped').tooltip({delay: 60});
         $('#loading').hide();
         $('.page-footer').css('display', 'block');
         $('.main-container').css('display', 'block');
@@ -350,12 +303,12 @@ function Game() {
         $('.navbar-fixed').css('display', 'block');
         $('.nav-wrapper').css('background', '#2196F3');
         
-        $('ul.tabs').tabs('select_tab', 'bet001');
+        // $('ul.tabs').tabs('select_tab', 'bet001');
 
-        if (self.modalIntro <= 0) {
-            this.modalIntro++;
-            $('#intro').modal('open');
-        }
+        // if (self.modalIntro <= 0) {
+        //     this.modalIntro++;
+        //     $('#intro').modal('open');
+        // }
 
         // for (var i = 0; i <= self.currentRoundId; i++) {
         //     self.rounds[i].initialized = false;
@@ -370,7 +323,7 @@ function Game() {
         $('.navbar-fixed').css('display', 'none');
         $('.nav-wrapper').css('background', 'white');
 
-        $('ul.tabs').tabs('select_tab', 'bet001');
+        // $('ul.tabs').tabs('select_tab', 'bet001');
     }
 
     this.areAllRoundsInitialed = function () {
@@ -389,51 +342,6 @@ function Game() {
         $('#rounds').prepend(html);
     }
 
-    // this.renderRounds = function () {
-    //     console.log('Total rounds: ' + this.rounds.length);
-    //     $('#rounds').html('');
-    //     for (var i = 0; i < this.rounds.length; i++) {
-    //         var html = $('#round_template').html();
-    //         html = html.replace(/{round_id}/g, i);
-    //         if (this.rounds[i].open) {
-    //             html = html.replace('>lock<', '>lock_open<');
-    //             html = html.replace('{color}', 'blue');
-    //             html = html.replace('{betButton}', $('#bet_button_template').html());
-    //         } else {
-    //             html = html.replace('{color}', 'grey lighten-1');
-    //             html = html.replace('{betButton}', $('#bet_number_template').html().replace(/{number}/g, this.rounds[i].number));
-    //         }
-    //         html = html.replace(/{prize}/g, this.rounds[i].prize);
-    //         html = html.replace('{minAmount}', this.rounds[i].minAmount);
-    //         html = html.replace('{minAmount}', this.rounds[i].minAmount);
-    //         html = html.replace('{numberOfBets}', this.rounds[i].numberOfBets)
-    //         html = html.replace('{remaining}', this.rounds[i].remaining)
-    //         html = html.replace('{progress}', this.rounds[i].progress)
-
-    //         // render bets
-    //         var bets_html = ''
-    //         for (var j = this.rounds[i].bets.length-1; j >= 0; j--) {
-    //             var bet_html = $('#bet_template').html();
-    //             if ((!this.rounds[i].open) && (this.rounds[i].bets[j].bet == this.rounds[i].number)) {
-    //                 bet_html = bet_html.replace('{win}', 'green lighten-3');
-    //             } else {
-    //                 bet_html = bet_html.replace('{win}', '');
-    //             } 
-    //             bet_html = bet_html.replace(/{bet_id}/g, this.rounds[i].bets[j].id);
-    //             bet_html = bet_html.replace(/{origin}/g, this.rounds[i].bets[j].origin);
-    //             bet_html = bet_html.replace(/{amount}/g, this.rounds[i].bets[j].amount);
-    //             bets_html += bet_html;
-    //         }
-    //         html = html.replace('{bets}', bets_html);
-
-    //         $('#rounds').prepend(html);
-    //     }
-
-    //     this.renderAllIdenticons();
-    //     $('.page-footer').css('display', 'block');
-    //     $('.main-container').css('display', 'block');
-    //     $('#loading').hide();
-    // }
 
     this.renderIdenticon = function (obj) {
         obj.style.backgroundImage = 'url(' + blockies.create({ seed:obj.innerHTML, size: 8, scale: 8}).toDataURL() + ')'
@@ -573,3 +481,23 @@ function Game() {
     this.initAccounts();
     this.initUIElements();
 }
+
+$(document).ready(function() {
+    $('.modal').modal();
+    $('#tabs').tabs({'swipeable': false});
+    $('.tooltipped').tooltip({delay: 60});
+    $('#close-intro-btn').click(function() {
+        $('#intro').css('display', 'none');
+    });
+    $(window).scroll(function() {
+        var opacity = 1 - $(window).scrollTop() / 70;
+        if (opacity < 0) {
+            opacity = 0;
+        }
+        $('#avatar, .tabs, #dropdown-nav').css('opacity', opacity);
+    });
+    $('#logo-btn').click(function() {
+        $('ul.tabs').tabs('select_tab', 'intro1');
+    });
+    $('.main-container').css('display', 'block');
+});
