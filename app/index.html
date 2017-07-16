@@ -24,8 +24,9 @@
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/materialize.css" media="screen,projection"/>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/materialize.css" media="screen,projection" />
+    <!-- <link rel="stylesheet" href="styles/emoji.css" /> -->
     <!-- endbuild -->
 
     <!--Import Google Icon Font-->
@@ -242,19 +243,22 @@
   <!-- Modal About -->
   <div id="intro" class="modal">
     <div class="modal-content">
-      <h4><i class="material-icons">done_all</i> Lotthereum</h4>
-      <ul class="collection">
-        <li class="collection-item">1st smart contract lottery <string>without</string> fees</li>
-        <li class="collection-item">No oracles or external contract transactions</li>
-        <li class="collection-item">Players bet against each other and not againt the house</li>
-        <li class="collection-item">Rounds results are imediatly after the last bet is placed</li>
-        <li class="collection-item">Every round has a fixed prize, a fixed value per bet, and a fixed number of participants.</li>
-        <li class="collection-item">The prize is divided equally by all winners</li>
-        <li class="collection-item">Prize is available right after the last bet is placed</li>
+      <ul class="collection with-header">
+        <li class="collection-header"><h5><i class="material-icons">done_all</i> Lotthereum</h5></li>
+        <li class="collection-item"><i class="material-icons left">done</i> Lotthereum has NO fees <!-- <i class="em em-money_with_wings"></i> --></li>
+        <li class="collection-item"><i class="material-icons left">done</i> Lotthereum does NOT use oracles or external contract transactions <!-- <i class="em em-imp"></i> --></li>
+        <li class="collection-item"><i class="material-icons left">done</i> Lotthereum does NOT keep records or check IP addresses <!-- <i class="em em-mag"></i> --></li>
+        <!-- <li class="collection-item"><i class="material-icons left">done</i> Players bet against each other and not againt the house</li> -->
+      </ul>
+      <ul class="collection with-header">
+        <li class="collection-header"><h5><i class="material-icons">question_answer</i> How does Lotthereum works?</h5></li>
+        <li class="collection-item"><i class="material-icons left">looks_one</i> Players have to guess a number between 0-9</li>
+        <li class="collection-item"><i class="material-icons left">looks_two</i> Every round has a fixed prize, a fixed value per bet, and a fixed number of participants.</li>
+        <li class="collection-item"><i class="material-icons left">looks_3</i> The prize is divided equally by all winners right after the last bet is placed</li>
       </ul>
     </div>
     <div class="modal-footer">
-      <a class="modal-action modal-close waves-effect btn-flat"><i class="material-icons left">done</i>Close</a>
+      <a class="modal-action modal-close waves-effect btn green lighten-2"><i class="material-icons left">done</i>Close</a>
     </div>
   </div>
 
@@ -291,105 +295,67 @@
   <!-- Modal Bet -->
   <div id="bet1" class="modal">
     <div class="modal-content">
-      <h4 class="centered">Place your bet</h4>
-      <p class="caption">
-        Choose your lucky number.
-      </p>
-
       <div class="row">
         <form class="col s12">
-          <!-- <div class="row">
-            <div class="input-field col s12">
-              <i class="material-icons prefix">account_circle</i>
-              <select id="accounts_dropdown" class=""></select>
-            </div>
-          </div> -->
-          <div class="row">
-            <div class="input-field col s6">
-              <p>
-                <input name="bet_pick" type="radio" id="pick_0" value="0"/>
-                <label for="pick_0">0 (zero)</label>
-              </p>
-              <p>
-                <input name="bet_pick" type="radio" id="pick_1" value="1"/>
-                <label for="pick_1">1 (one)</label>
-              </p>
-              <p>
-                <input name="bet_pick" type="radio" id="pick_2" value="2"/>
-                <label for="pick_2">2 (two)</label>
-              </p>
-              <p>
-                <input name="bet_pick" type="radio" id="pick_3" value="3"/>
-                <label for="pick_3">3 (three)</label>
-              </p>
-              <p>
-                <input name="bet_pick" type="radio" id="pick_4" value="4"/>
-                <label for="pick_4">4 (four)</label>
-              </p>
-              <!-- <p>
-                <input type="checkbox" id="pick_0" />
-                <label for="pick_0">0</label>
-              </p>
-              <p>
-                <input type="checkbox" id="pick_1" />
-                <label for="pick_1">1</label>
-              </p>
-              <p>
-                <input type="checkbox" id="pick_2" />
-                <label for="pick_2">2</label>
-              </p>
-              <p>
-                <input type="checkbox" id="pick_3" />
-                <label for="pick_3">3</label>
-              </p>
-              <p>
-                <input type="checkbox" id="pick_4" />
-                <label for="pick_4">4</label>
-              </p> -->
-            </div>
-            <div class="input-field col s6">
-              <p>
-                <input name="bet_pick" type="radio" id="pick_5" value="5" />
-                <label for="pick_5">5 (five)</label>
-              </p>
-              <p>
-                <input name="bet_pick" type="radio" id="pick_6" value="6" />
-                <label for="pick_6">6 (six)</label>
-              </p>
-              <p>
-                <input name="bet_pick" type="radio" id="pick_7" value="7" />
-                <label for="pick_7">7 (seven)</label>
-              </p>
-              <p>
-                <input name="bet_pick" type="radio" id="pick_8" value="8" />
-                <label for="pick_8">8 (eight)</label>
-              </p>
-              <p>
-                <input name="bet_pick" type="radio" id="pick_9" value="9" />
-                <label for="pick_9">9 (nine)</label>
-              </p>
-              <!-- <p>
-                <input type="checkbox" id="pick_5" />
-                <label for="pick_5">5</label>
-              </p>
-              <p>
-                <input type="checkbox" id="pick_6" />
-                <label for="pick_6">6</label>
-              </p>
-              <p>
-                <input type="checkbox" id="pick_7" />
-                <label for="pick_7">7</label>
-              </p>
-              <p>
-                <input type="checkbox" id="pick_8" />
-                <label for="pick_8">8</label>
-              </p>
-              <p>
-                <input type="checkbox" id="pick_9" />
-                <label for="pick_9">9</label>
-              </p> -->
-            </div>
-          </div>
+
+          <ul class="collection with-header">
+            <li class="collection-header"><h5><i class="material-icons">play_for_work</i> Choose your lucky number</h5></li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_0" value="0"/>
+                    <label for="pick_0">0 (zero)</label>
+                  </td>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_1" value="1"/>
+                    <label for="pick_1">1 (one)</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_2" value="2"/>
+                    <label for="pick_2">2 (two)</label>
+                  </td>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_3" value="3"/>
+                    <label for="pick_3">3 (three)</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_4" value="4"/>
+                    <label for="pick_4">4 (four)</label>
+                  </td>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_5" value="5" />
+                    <label for="pick_5">5 (five)</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_6" value="6" />
+                    <label for="pick_6">6 (six)</label>
+                  </td>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_7" value="7" />
+                    <label for="pick_7">7 (seven)</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_8" value="8" />
+                    <label for="pick_8">8 (eight)</label>
+                  </td>
+                  <td>
+                    <input name="bet_pick" type="radio" id="pick_9" value="9" />
+                    <label for="pick_9">9 (nine)</label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ul>
+
           <div class="row" id="confirmations">
             <div class="col s12">
               <div class="progress blue lighten-4">
@@ -398,12 +364,13 @@
               <span class="wait_transaction right">Waiting transaction to be confirmed.</span>
             </div>
           </div>
+
         </form>
       </div>
     </div>
     <div class="modal-footer">
       <!-- <a class="waves-effect waves-light red lighten-2 btn left modal-action modal-close" ><i class="material-icons left">cancel</i>cancel</a> -->
-      <a class="waves-effect waves-light orange lighten-2 btn right" id="bet-btn"><i class="material-icons left">control_point</i>place bet</a>
+      <a class="waves-effect waves-light orange lighten-2 btn" id="bet-btn"><i class="material-icons left">control_point</i>place bet</a>
     </div>
   </div>
 
@@ -411,19 +378,22 @@
 
     <div class="container">
       <div class="row">
-        <div class="col l12 s12">
-          <p class="grey-text text-lighten-4 center-align">
-            <!-- <span class="title right">We hope you have made some ether using Lotthereum!</span> -->
-          </p>
+        <div class="col l12 s12 white-text">
+          <a class="waves-effect waves btn-flat left white-text" href="https://etherscan.io/address/0x3c563651318b6b2cf555207a1e611bb577fff446#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a>
+          <a id="trollbox_btn" class="waves-effect waves btn-flat right white-text" href="https://etherscan.io/address/0x3c563651318b6b2cf555207a1e611bb577fff446#code"><i class="material-icons left">chat</i>TROLLBOX</a>
+
           <!-- <p class="grey-text text-lighten-4">If you want to support the team, send us over a donation! Any amount would help support and continue development on this project and is greatly appreciated.</p>
           <a class="waves-effect waves btn orange lighten-2 modal-trigger" href="#donate1"><i class="material-icons left">attach_money</i>DONATE NOW</a> -->
         </div>
       </div>
     </div>
     <div class="footer-copyright">
-      <div class="container">
-        <a class="grey-text text-lighten-4 left" href="#!">2017 Lotthereum</a>
-        <a class="waves-effect waves btn orange lighten-2 right" href="https://etherscan.io/address/0x5e6ed16d845a46b9f863a256e7a3194f2a9e8b5c#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a>
+      <div class="container center-align">
+        <span>2017 Lotthereum</span>
+
+        <!-- <a class="grey-text text-lighten-4 left" href="#!">2017 Lotthereum</a>
+        <a class="waves-effect waves btn orange lighten-2 left" href="https://etherscan.io/address/0x3c563651318b6b2cf555207a1e611bb577fff446#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a>
+        <a class="waves-effect waves btn orange lighten-2 right" href="https://etherscan.io/address/0x3c563651318b6b2cf555207a1e611bb577fff446#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a> -->
       </div>
     </div>
   </footer>
@@ -522,12 +492,13 @@
 
       // Net check
       web3.version.getNetwork((err, netId) => {
-        window.contract_address = '0x2f0d0b1dfcfa33e7d786b89d4fa0a731cebd8916';
+        window.contract_address = '0xcb1baf4c1d7f2ff9242ea963d9f317b98fe09048';
         switch (netId) {
           case "1":
             console.log('This is mainnet')
             // window.contract_address = '0x5e6ed16d845a46b9f863a256e7a3194f2a9e8b5c'  // 1 main
-            window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 2 main
+            // window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 2 main
+            window.contract_address = '0x3c563651318b6b2cf555207a1e611bb577fff446'  // 3 main
             break
           case "2":
             console.log('This is the deprecated Morden test network.')
@@ -536,16 +507,26 @@
             console.log('This is the ropsten test network.')
             // window.contract_address = '0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c'  // 1
             // window.contract_address = '0x9e97ec0421b8d3c2d818d02b8dbe59c7f90affc6'  // 2
-            window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 3
+            // window.contract_address = '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  // 3
+            window.contract_address = '0x668143a1fc6c3a83a85c2fd20f3e51dac06fd3f3'  // 4
             break
           default:
             console.log('This is an unknown network.')
         }
         console.log('Contract address: ' + window.contract_address)
-        g = new Game(0);
+        // g = new Game(0);
       });
     })
   </script>
+
+  <!-- Gitter -->
+  <script>
+    ((window.gitter = {}).chat = {}).options = {
+      room: 'lotthereum-github-io/Lobby',
+      activationElement: '#trollbox_btn',
+    };
+  </script>
+  <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 
   <!-- build:js scripts/main.js -->
   <!-- <script src="scripts/main.js"></script> -->
