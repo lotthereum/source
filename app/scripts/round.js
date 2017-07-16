@@ -251,7 +251,7 @@ function Game() {
         html = html.replace('{minAmount}', self.rounds[id].minAmount);
         html = html.replace('{numberOfBets}', self.rounds[id].numberOfBets)
         html = html.replace('{remaining}', self.rounds[id].remaining)
-        html = html.replace('{progress}', self.rounds[id].progress)
+        html = html.replace(/{progress}/g, self.rounds[id].progress)
 
         // render bets
         var bets_html = ''
