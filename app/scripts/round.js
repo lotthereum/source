@@ -29,7 +29,7 @@ function Round(game, contractInstance, id) {
                 self.contractInstance.getRoundNumber(self.id, function(error, result){
                     self.number = result.valueOf();
                     done(error, self.number);
-                })
+                });
             },
             function(roundNumber, done) {
                 self.contractInstance.getRoundPrize(self.id, function(error, result){
@@ -47,28 +47,23 @@ function Round(game, contractInstance, id) {
                 self.contractInstance.getRoundMaxNumberOfBets(self.id, function(error, result){
                     self.maxNumber = result.valueOf();
                     done(error, result.valueOf());
-                })
+                });
             },
             function(roundMaxNumberOfBets, done) {
                 self.contractInstance.getRoundNumberOfBets(self.id, function(error, result){
                     self.numberOfBets = result.valueOf();
+                    self.remaining = parseInt(self.maxNumber) - parseInt(self.numberOfBets);
+                    self.progress = parseFloat(100 * self.numberOfBets / self.maxNumber).toString();
+                    for (var i = self.numberOfBets - 1; i >= 0; i--) {
+                        self.bets.push(new Bet(self, i));
+                    }
+                    if (self.numberOfBets < 1) {
+                        self.initialized = true;
+                        self.game.renderRoundIfInitialized(self.id);
+                    }
                     done(error, result.valueOf());
-                })
+                });
             },
-            function(roundNumberOfBets, done) {
-                self.remaining = parseInt(self.maxNumber) - parseInt(self.numberOfBets);
-                self.progress = parseFloat(100 * self.numberOfBets / self.maxNumber);
-                for (var i = self.numberOfBets - 1; i >= 0; i--) {
-                    self.bets.push(new Bet(self, i));
-                }
-                if (self.numberOfBets < 1) {
-                    self.initialized = true;
-                    self.game.renderRoundIfInitialized(self.id);
-                    // self.game.renderRound(self.id);
-                }
-
-                done(null, self.progress);
-            }
         ],
         function (err) {
             if (err) {
@@ -230,6 +225,8 @@ function Game() {
             self.renderRound(id);
             self.rounds[id].rendered = 0;
         }
+        // self.rounds[id].initialized = true;
+        // self.renderRound(id);
     }
 
     this.renderRound = function (id) {
@@ -249,9 +246,9 @@ function Game() {
         html = html.replace(/{prize}/g, self.rounds[id].prize);
         html = html.replace('{minAmount}', self.rounds[id].minAmount);
         html = html.replace('{minAmount}', self.rounds[id].minAmount);
-        html = html.replace('{numberOfBets}', self.rounds[id].numberOfBets)
-        html = html.replace('{remaining}', self.rounds[id].remaining)
-        html = html.replace(/{progress}/g, self.rounds[id].progress)
+        html = html.replace('{numberOfBets}', self.rounds[id].numberOfBets);
+        html = html.replace('{remaining}', self.rounds[id].remaining);
+        html = html.replace(/{progress}/g, self.rounds[id].progress);
 
         // render bets
         var bets_html = ''
@@ -285,6 +282,7 @@ function Game() {
         }
 
         $('#round_' + id + '_holder').html(html);
+        $('#round_' + id + '_progress').css('width', self.rounds[id].progress + '%');
 
         // self.rounds[id].initialized = true;
 
