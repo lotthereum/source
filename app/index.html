@@ -15,8 +15,6 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/images/icons-144x144.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/icons-180x180.png">
 
-    <!-- Place favicon.ico in the root directory -->
-
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/materialize/bin/materialize.css" />
@@ -29,7 +27,7 @@
     <link rel="stylesheet" href="styles/emoji.css" />
     <!-- endbuild -->
 
-    <!--Import Google Icon Font-->
+    <!-- Import Google Icon Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   </head>
@@ -43,22 +41,20 @@
       <div class="nav-wrapper">
         <a id="logo-btn" href="#lotthereum"><img src="/images/icons-72x72.png" class="logo"></a>
         <a class="brand-logo modal-trigger center" href="#about1">Lotthereum</a>
+        <a id="avatar" class="avatar2 eth-address dropdown-button" data-activates="dropdown-nav"></a>
+        <ul id="dropdown-nav" class="dropdown-content"></ul>
       </div>
     </nav>
 
     <!-- <a id="avatar" class="avatar2 eth-address tooltipped dropdown-button" data-activates='dropdown-nav' data-position="bottom" data-delay="50" data-tooltip=""></a> -->
 
-    <a id="avatar" class="avatar2 eth-address dropdown-button" data-activates="dropdown-nav"></a>
-    <ul id="dropdown-nav" class="dropdown-content">
-    </ul>
-
-      <ul class="tabs tabs-fixed-width main-navbar">
+      <ul id="tabs" class="tabs tabs-fixed-width main-navbar">
         <li class="tab col s2"><a class="active" href="#intro1">Lotthereum</a></li>
-        <li class="tab col s2"><a href="#bet001">0.1 eth</a></li>
+        <!--<li class="tab col s2"><a href="#bet001">0.01 eth</a></li>
         <li class="tab col s2"><a href="#bet025">0.25 eth</a></li>
         <li class="tab col s2"><a href="#bet050">0.5 eth</a></li>
         <li class="tab col s2"><a href="#bet075">0.75 eth</a></li>
-        <li class="tab col s2"><a href="#bet100">1 eth</a></li>
+        <li class="tab col s2"><a href="#bet100">1 eth</a></li>-->
         <li class="tab col s2"><a href="#withdraw"><span class="new badge balance" data-badge-caption="ETH"></span>Withdraw</a></li>
       </ul>
   </div>
@@ -69,9 +65,16 @@
     </div>
   </div>
 
-  <!-- placeholder template -->
+  <!-- round placeholder template -->
   <div id="round_placeholder_template" class=template>
     <div id="round_{round_id}_holder"></div>
+  </div>
+
+  <!-- game placeholder template -->
+  <div id="game_placeholder_template" class=template>
+    <div id="game_{game_id}_holder">
+      <div id="rounds_{game_id}" class="col s12 m12"></div>
+    </div>
   </div>
 
   <!-- rond template -->
@@ -117,7 +120,7 @@
 
   <!-- bet button template -->
   <script type="text/html" id="bet_button_template">
-    <a class="btn-floating halfway-fab orange lighten-2 bet-btn pulse modal-trigger" href="#bet1"><i class="material-icons">add</i></a>
+    <a class="btn-floating halfway-fab orange lighten-2 bet-btn pulse modal-trigger" href="#bet-modal"><i class="material-icons">add</i></a>
   </script>
 
   <!-- bet number template -->
@@ -126,111 +129,9 @@
   </script>
 
   <div class="container main-container">
-    <div id="bet001" class="col s12">
-      <div class="row">
-        <div id="rounds" class="col s12 m12"></div>
-      </div>
-    </div>
-    <div id="bet025" class="col s12">
-      <div class="row">
-        <div class="col s12 m12">
-          <div class="card grey lighten-1 z-depth-1 round">
-            <a class="btn-floating halfway-fab orange lighten-2 disabled bet-btn" href="#!"><i class="material-icons">add</i></a>
-            <div class="card-content white-text">
-              <span class="card-title"><i class="material-icons">lock</i> Round 0</span>
-              <table class="centered round-data">
-                <tbody>
-                  <tr>
-                    <td>2.5 ether prize</td>
-                    <td>0.25 ether per bet</td>
-                    <td>0 bets placed</td>
-                    <td>10 bets remaining</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="progress blue lighten-4">
-                <div class="determinate orange lighten-2" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="bet050" class="col s12">
-      <div class="row">
-        <div class="col s12 m12">
-          <div class="card grey lighten-1 z-depth-1 round">
-            <a class="btn-floating halfway-fab orange lighten-2 disabled bet-btn" href="#!"><i class="material-icons">add</i></a>
-            <div class="card-content white-text">
-              <span class="card-title"><i class="material-icons">lock</i> Round 0</span>
-              <table class="centered round-data">
-                <tbody>
-                  <tr>
-                    <td>5 ether prize</td>
-                    <td>0.5 ether per bet</td>
-                    <td>0 bets placed</td>
-                    <td>10 bets remaining</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="progress blue lighten-4">
-                <div class="determinate orange lighten-2" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="bet075" class="col s12">
-      <div class="row">
-        <div class="col s12 m12">
-          <div class="card grey lighten-1 z-depth-1 round">
-            <a class="btn-floating halfway-fab orange lighten-2 disabled bet-btn" href="#!"><i class="material-icons">add</i></a>
-            <div class="card-content white-text">
-              <span class="card-title"><i class="material-icons">lock</i> Round 0</span>
-              <table class="centered round-data">
-                <tbody>
-                  <tr>
-                    <td>7.5 ether prize</td>
-                    <td>0.75 ether per bet</td>
-                    <td>0 bets placed</td>
-                    <td>10 bets remaining</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="progress blue lighten-4">
-                <div class="determinate orange lighten-2" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="bet100" class="col s12">
-      <div class="row">
-        <div class="col s12 m12">
-          <div class="card grey lighten-1 z-depth-1 round">
-            <a class="btn-floating halfway-fab orange lighten-2 disabled bet-btn" href="#!"><i class="material-icons">add</i></a>
-            <div class="card-content white-text">
-              <span class="card-title"><i class="material-icons">lock</i> Round 0</span>
-              <table class="centered round-data">
-                <tbody>
-                  <tr>
-                    <td>10 ether prize</td>
-                    <td>1 ether per bet</td>
-                    <td>0 bets placed</td>
-                    <td>10 bets remaining</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="progress blue lighten-4">
-                <div class="determinate orange lighten-2" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+    <div id="games-container"></div>
+
     <div id="intro1" class="col s12">
       <div class="row">
         <div class="col s12 m12">
@@ -264,10 +165,11 @@
       </div>
       <div class="row">
         <div class="col s12 m12 center-align">
-          <a id="place-your-bet" class="waves-effect waves btn orange lighten-2 pulse" href="#!"><i class="material-icons left">play_arrow</i> Place your bet</a>
+          <a id="place-your-bet" class="waves-effect waves btn orange lighten-2 pulse"><i class="material-icons left">play_arrow</i> Place your bet</a>
         </div>
       </div>
     </div>
+
     <div id="withdraw" class="col s12">
       <div class="row">
         <div class="col s12 m12">
@@ -289,30 +191,14 @@
 
               <div id="withdraw-confirmations">
                 <span id="withdraw-transaction-id" class="right"></span>
-                <!-- <div class="progress blue lighten-4">
-                    <div class="indeterminate orange lighten-2"></div>
-                </div>
-                <span class="wait_transaction right">Waiting transaction to be confirmed.</span> -->
               </div>
 
-              <!-- <a class="waves-effect waves btn red" href="#!"><i class="material-icons left">cancel</i> CANCEL</a> -->
               <a id="withdraw-btn" class="waves-effect waves btn green" href="#!"><i class="material-icons left">attach_money</i> WITHDRAW</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- <ul class="pagination">
-      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-      <li class="active orange lighten-2"><a href="#!">1</a></li>
-      <li class="waves-effect"><a href="#!">2</a></li>
-      <li class="waves-effect"><a href="#!">3</a></li>
-      <li class="waves-effect"><a href="#!">4</a></li>
-      <li class="waves-effect"><a href="#!">5</a></li>
-      <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-    </ul> -->
-
   </div>
 
   <!-- Modal Donations -->
@@ -367,11 +253,10 @@
   </div>
 
   <!-- Modal Bet -->
-  <div id="bet1" class="modal">
+  <div id="bet-modal" class="modal">
     <div class="modal-content">
       <div class="row">
         <form class="col s12">
-
           <ul class="collection with-header">
             <li class="collection-header"><h5><i class="material-icons">play_for_work</i> Choose your lucky number</h5></li>
             <table>
@@ -505,7 +390,9 @@
   <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 
   <!-- build:js scripts/main.js -->
-  <script src="scripts/round.js"></script>
+  <!-- <script src="scripts/round.js"></script> -->
+  <script src="scripts/blockies.js"></script>
+  <script src="scripts/lotthereum.js"></script>
   <!-- endbuild -->
 
   <script type="text/javascript">
@@ -524,7 +411,7 @@
 
         // Net check
         web3.version.getNetwork((err, netId) => {
-            window.contract_address = '0xcb1baf4c1d7f2ff9242ea963d9f317b98fe09048';
+            window.contract_address = '0xa3b33f7db8748c014e279460f80824795188baa0';
             switch (netId) {
                 case '1':
                     console.log('This is mainnet')
@@ -546,7 +433,7 @@
                     console.log('This is an unknown network.')
             }
             console.log('Contract address: ' + window.contract_address)
-            g = new Game(0);
+            g = new Lotthereum();
         });
     })
   </script>

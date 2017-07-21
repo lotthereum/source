@@ -1,78 +1,110 @@
 var Lotthereum = artifacts.require("./Lotthereum.sol");
 
-hash = '0x93036b147316017199338e191dbff124b5358520517f23a4b38db9769850f4ca';
-blockPointer = 1;
-maxNumberOfBets = 20;
-minAmountByBet = 100000000000000000;
-prize = 1000000000000000000;
-
 contract('Lotthereum', function(accounts) {
-  it("should allow clients to get the current round id", function(done) {
+  it("should allow owner to create multiple games", function(done) {
     var lotthereum;
     Lotthereum.deployed().then(function(instance) {
-      return instance.getCurrentRoundId().then(function(roundId) {
-        assert.equal(roundId, 0);
+      watcher = instance.RoundOpen({origin: accounts[0]});
+
+      instance.createGame(1, 20, 2, 20, {from: accounts[0]}).then(function() {
+        return watcher.get();
+      }).then(function(events) {
+        assert.equal(events.length, 1);
+        assert.equal(events[0].args.gameId.valueOf(), 0);
+        assert.equal(events[0].args.roundId.valueOf(), 0);
+
+        instance.createGame(2, 10, 5, 50, {from: accounts[0]}).then(function() {
+          return watcher.get();
+        }).then(function(events) {
+          assert.equal(events.length, 1);
+          assert.equal(events[0].args.gameId.valueOf(), 1);
+          assert.equal(events[0].args.roundId.valueOf(), 0);
+          done();
+        });
+      });
+    });
+  });
+
+  it("should allow clients to get the current games", function(done) {
+    var lotthereum;
+    Lotthereum.deployed().then(function(instance) {
+      return instance.getGames().then(function(games) {
+        assert.equal(games.length, 2);
+        assert.equal(games[0].valueOf(), 0);
+        assert.equal(games[1].valueOf(), 1);
+      }).then(done).catch(done);
+    });
+  });
+
+  it("should allow clients to get a game current round id", function(done) {
+    var lotthereum;
+    Lotthereum.deployed().then(function(instance) {
+      return instance.getGameCurrentRoundId(0).then(function(roundId) {
+        assert.equal(roundId.valueOf(), 0);
       }).then(done).catch(done);
     });
   });
 
   it("should allow clients to know if the round is open", function(done) {
     var lotthereum;
-    var round = 0;
+    var gameId = 0;
+    var roundId = 0;
     Lotthereum.deployed().then(function(instance) {
-      return instance.getRoundOpen(round).then(function(roundOpen) {
+      return instance.getGameRoundOpen(gameId, roundId).then(function(roundOpen) {
         assert.isTrue(roundOpen);
       }).then(done).catch(done);
     });
   });
 
-  it("should allow clients to get the minimum bet amount of a round", function(done) {
+  it("should allow clients to get the minimum bet amount of a game", function(done) {
     var lotthereum;
-    var round = 0;
+    var gameId = 0;
     Lotthereum.deployed().then(function(instance) {
-      return instance.getRoundMinAmountByBet(round).then(function(minBet) {
-        assert.equal(minBet, 100000000000000000);
+      return instance.getGameMinAmountByBet(gameId).then(function(minBet) {
+        assert.equal(minBet, 2);
       }).then(done).catch(done);
     });
   });
 
-  it("should allow clients to get the maximum number of bets of a round", function(done) {
+  it("should allow clients to get the maximum number of bets of a game", function(done) {
     var lotthereum;
-    var round = 0;
+    var gameId = 0;
     Lotthereum.deployed().then(function(instance) {
-      return instance.getRoundMaxNumberOfBets(round).then(function(maxNumberOfBets) {
+      return instance.getGameMaxNumberOfBets(gameId).then(function(maxNumberOfBets) {
         assert.equal(maxNumberOfBets, 20);
       }).then(done).catch(done);
     });
   });
 
-  it("should allow clients to get the prize of a round", function(done) {
+  it("should allow clients to get the prize of a game", function(done) {
     var lotthereum;
-    var round = 0;
+    var gameId = 0;
     Lotthereum.deployed().then(function(instance) {
-      return instance.getRoundPrize(round).then(function(prize) {
-        assert.equal(prize, 1000000000000000000);
+      return instance.getGamePrize(gameId).then(function(prize) {
+        assert.equal(prize, 20);
       }).then(done).catch(done);
     });
   });
 
-  it("should allow clients to get the number of bet already placed in a round", function(done) {
+  it("should allow clients to get the number of bets already placed in a game round", function(done) {
     var lotthereum;
-    var round = 0;
+    var gameId = 0;
+    var roundId = 0;
     Lotthereum.deployed().then(function(instance) {
-      return instance.getRoundNumberOfBets(round).then(function(numberOfBets) {
+      return instance.getRoundNumberOfBets(gameId, roundId).then(function(numberOfBets) {
         assert.equal(numberOfBets, 0);
       }).then(done).catch(done);
     });
   });
 
-  it("should emit a BetPlaced events for every bet placed", function(done) {
+  it("should emit a BetPlaced event for every bet placed", function(done) {
     var lotthereum;
-    var account;
+    var account = accounts[1];
+    var gameId = 0;
+    var roundId = 0;
     Lotthereum.deployed().then(function(instance) {
-      account = accounts[1];
       var watcher = instance.BetPlaced({origin: account});
-      instance.bet(0, {from: account, value: 100000000000000000}).then(function() {
+      instance.placeBet(gameId, 0, {from: account, value: 2}).then(function() {
         return watcher.get();
       }).then(function(events) {
         assert.equal(events.length, 1);
@@ -81,12 +113,12 @@ contract('Lotthereum', function(accounts) {
     });
   });
 
-  it("should reject bets with value less than the round minAmountByBet", function(done) {
+  it("should reject bets with value less than the game minAmountByBet", function(done) {
     var lotthereum;
-    var account;
+    var account = accounts[1];
+    var gameId = 0;
     Lotthereum.deployed().then(function(instance) {
-      account = accounts[1];
-      return instance.bet(1, {from: account, value: 1}).then(function(result) {
+      return instance.placeBet(gameId, 1, {from: account, value: 1}).then(function(result) {
         assert.isNotNull(result.tx);
         assert.equal(result.receipt.logs.length, 0);
       }).then(done).catch(done);
@@ -95,12 +127,14 @@ contract('Lotthereum', function(accounts) {
 
   it("should allow 17 bets to be placed", function(done) {
     var lotthereum;
-    var account;
+    var account = accounts[1];
+    var gameId = 0;
+    var roundId = 0;
     Lotthereum.deployed().then(function(instance) {
-      account = accounts[1];
+
       watcher = instance.BetPlaced({origin: account});
       for (var i = 1; i <= 9; i++) {
-        instance.bet(i, {from: account, value: 100000000000000000}).then(function() {
+        instance.placeBet(gameId, i, {from: account, value: 2}).then(function() {
           return watcher.get();
         }).then(function(events) {
           assert.equal(events.length, 1);
@@ -111,7 +145,7 @@ contract('Lotthereum', function(accounts) {
       account = accounts[2];
       watcher = instance.BetPlaced({origin: account});
       for (var i = 0; i <= 8; i++) {
-        instance.bet(i, {from: account, value: 100000000000000000}).then(function() {
+        instance.placeBet(gameId, i, {from: account, value: 2}).then(function() {
           return watcher.get();
         }).then(function(events) {
           assert.equal(events.length, 1);
@@ -120,127 +154,25 @@ contract('Lotthereum', function(accounts) {
       }
 
       done();
-
-      // then(done).catch(done);
-
-      // var watcher1 = instance.BetPlaced({origin: accounts[1]});
-      // var watcher1 = instance.BetPlaced({origin: account});
-
-      // // 8 bets from accounts[1]
-      // instance.bet(2, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(3, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(4, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(5, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(6, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(7, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(8, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(9, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // }).then(function(events) {
-
-      // account = accounts[2];
-      // var watcher = instance.BetPlaced({origin: account});
-      // // 9 bets from accounts[2]
-      // instance.bet(1, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(2, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(3, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(4, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(5, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(6, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(7, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // })
-      // instance.bet(8, {from: account, value: 100000000000000000}).then(function() {
-      //   return watcher.get();
-      // }).then(function(events) {
-      //   assert.equal(events.length, 1);
-      //   assert.equal(events[0].args.origin, account);
-      // }).then(done).catch(done);
     });
   });
 
   it("should close the round when the last bet is placed", function(done) {
     var lotthereum;
     var account = accounts[2];
-    var round = 0;
+    var gameId = 0;
+    var roundId = 0;
     var next_round = 1;
+    var prize = 20;
+    var maxNumberOfBets = 20;
+    var minAmountByBet = 2;
+
     Lotthereum.deployed().then(function(instance) {
       var betPlacedWatcher = instance.BetPlaced({origin: account});
       var roundWinnerWatcher = instance.RoundWinner();
-      var roundCloseWatcher = instance.RoundClose({id: round});
+      var roundCloseWatcher = instance.RoundClose({gameId: gameId, roundId: roundId});
       var roundOpenWatcher = instance.RoundOpen({id: next_round});
-      instance.bet(9, {from: account, value: 100000000000000000}).then(function() {
+      instance.placeBet(gameId, 9, {from: account, value: 2}).then(function() {
         return betPlacedWatcher.get();
       }).then(function(events) {
         assert.equal(events.length, 1);
@@ -253,22 +185,23 @@ contract('Lotthereum', function(accounts) {
         return roundCloseWatcher.get();
       }).then(function(events) {
         assert.equal(events.length, 1);
-        assert.equal(events[0].args.id, round);
+        assert.equal(events[0].args.gameId, gameId);
+        assert.equal(events[0].args.roundId, roundId);
         return roundOpenWatcher.get();
       }).then(function(events) {
         assert.equal(events.length, 1);
-        assert.equal(events[0].args.id, next_round);
-        assert.equal(events[0].args.maxNumberOfBets, maxNumberOfBets);
-        assert.equal(events[0].args.minAmountByBet, minAmountByBet);
+        assert.equal(events[0].args.gameId, gameId);
+        assert.equal(events[0].args.roundId, next_round);
       }).then(done).catch(done);
     });
   });
 
-  it("should allow clients to get the lucky number of a round", function(done) {
+  it("should allow clients to get the lucky number of a past round", function(done) {
     var lotthereum;
-    var round = 0;
+    var gameId = 0;
+    var roundId = 0;
     Lotthereum.deployed().then(function(instance) {
-      return instance.getRoundNumber(round).then(function(luckyNumber) {
+      return instance.getRoundNumber(gameId, roundId).then(function(luckyNumber) {
         assert.isNotNull(luckyNumber);
       }).then(done).catch(done);
     });
@@ -276,40 +209,16 @@ contract('Lotthereum', function(accounts) {
 
   it("should split the prize equaly by the round winners", function(done) {
     var lotthereum;
-    var round = 0;
+    var account = accounts[1];
     Lotthereum.deployed().then(function(instance) {
-      return instance.getRoundNumber(round).then(function(luckyNumber) {
-        assert.isNotNull(luckyNumber);
-      }).then(done).catch(done);
+      instance.getBalance({from: account}).then(function(balance) {
+        assert.equal(balance, 10);
+      });
+      account = accounts[2];
+      instance.getBalance({from: account}).then(function(balance) {
+        assert.equal(balance, 10);
+      });
     });
+    done();
   });
-
-
-  // it("should reject bets with value less than the round minAmountByBet", function(done) {
-  //   var lotthereum;
-  //   var account = accounts[1];
-  //   Lotthereum.deployed().then(function(instance) {
-  //     var watcher = instance.BetPlaced();
-  //     return instance.bet(1, {from: account, value: 1}).then(function(result) {
-  //       assert.isNotNull(result.tx);
-  //       assert.equal(result.receipt.logs.length, 0);
-  //     }).then(done).catch(done);
-  //   });
-  // });
-
-  // it("should be able to get number of bets", function(done) {
-  //   var lotthereum;
-  //   var account = accounts[1];
-  //   Lotthereum.deployed().then(function(instance) {
-  //     var watcher = instance.BetPlaced();
-  //     return instance.bet(1, {from: account, value: 100000000000000000}).then(function(result) {
-  //       assert.isNotNull(result.tx);
-  //       assert.equal(result.receipt.logs.length, 1);
-  //       return instance.getRoundNumberOfBets(0).then(function(numberOfBets) {
-  //         console.log('>>' + numberOfBets);
-  //       });
-  //     }).then(done).catch(done);
-  //   });
-  // });
-
 });

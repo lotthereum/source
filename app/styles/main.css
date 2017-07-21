@@ -100,8 +100,8 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 50%;
-    /*box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;*/
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px, 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
     text-indent: -9999px;
     position: absolute;
     left: 15px;
@@ -157,7 +157,7 @@ body {
   margin: 0 !important;
   width: 100% !important;
   max-width: 100% !important;
-  padding: 0 5% 10px 5% !important;
+  padding: 20px 5% 10px 5% !important;
   background-color: white;
   display: none;
 }
@@ -168,6 +168,8 @@ body {
 
 .tabs {
   width: 80% !important;
+  z-index: 101;
+  height: 56px !important;
 }
 
 .tabs, .tab, .tab a {
@@ -183,12 +185,12 @@ body {
 
 .avatar2 {
   position: absolute !important;
-  top: 17px;
+  top: 11px;
   right: 15px;
   left: auto;
   min-height: auto !important;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
 }
 
 #avatar {
@@ -201,17 +203,21 @@ body {
 }
 
 .dropdown-content {
-  width: 480px !important;
+  width: 350px !important;
   background-color: rgba(255, 255, 255, 1) !important;
   padding: 20px 70px !important;
 }
 
 .dropdown-content li a {
   padding-left: 70px !important;
+  font-size: 11px !important;
 }
 
 #dropdown-nav {
   padding: 0px !important;
+  z-index: 1000 !important;
+  top: 64px !important;
+  right: 0px !important;
 }
 
 .square {
@@ -275,4 +281,12 @@ body {
 
 .alert-note {
   display: none;
+}
+
+.navbar-fixed nav {
+  z-index: 100;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+  width: 100% !important;
 }

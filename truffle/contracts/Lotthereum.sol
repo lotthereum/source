@@ -1,30 +1,32 @@
 pragma solidity ^0.4.11;
 
+import "./SafeMath.sol";
 import "./Mortal.sol";
 
 
-contract Lotthereum is Mortal {
-    uint blockPointer;
-    uint maxNumberOfBets;
-    uint minAmountByBet;
-    uint prize;
-    uint currentRound;
-    bytes32 private hash;
+contract Lotthereum is Mortal, SafeMath {
 
-    Round[] private rounds;
-    mapping (uint => Bet[]) bets;
-    mapping (address => uint) private balances;
-    mapping (uint => address[]) winners;
+    Game[] private games;
+    mapping (address => uint) private balances;  // balances per address
+
+    struct Game {
+        uint id;
+        uint pointer;
+        uint maxNumberOfBets;
+        uint minAmountByBet;
+        uint prize;
+        uint currentRound;
+        Round[] rounds;
+    }
 
     struct Round {
         uint id;
+        uint pointer;
+        bytes32 hash;
         bool open;
-        uint maxNumberOfBets;
-        uint minAmountByBet;
-        uint blockNumber;
-        bytes32 blockHash;
         uint8 number;
-        uint prize;
+        Bet[] bets;
+        address[] winners;
     }
 
     struct Bet {
@@ -35,66 +37,96 @@ contract Lotthereum is Mortal {
         uint round;
     }
 
-    event RoundOpen(uint indexed id, uint maxNumberOfBets, uint minAmountByBet);
-    event RoundClose(uint indexed id, uint8 number, uint blockNumber, bytes32 blockHash);
-    event MaxNumberOfBetsChanged(uint maxNumberOfBets);
-    event MinAmountByBetChanged(uint minAmountByBet);
-    event BetPlaced(address indexed origin, uint roundId, uint betId);
-    event RoundWinner(address indexed winnerAddress, uint amount);
+    event RoundOpen(
+        uint indexed gameId,
+        uint indexed roundId
+    );
+    event RoundClose(
+        uint indexed gameId,
+        uint indexed roundId,
+        uint8 number
+    );
+    event MaxNumberOfBetsChanged(
+        uint maxNumberOfBets
+    );
+    event MinAmountByBetChanged(
+        uint minAmountByBet
+    );
+    event BetPlaced(
+        uint indexed gameId,
+        uint indexed roundId,
+        address indexed origin,
+        uint betId
+    );
+    event RoundWinner(
+        uint indexed gameId,
+        uint indexed roundId,
+        address indexed winnerAddress,
+        uint amount
+    );
 
-    function Lotthereum(uint _blockPointer, uint _maxNumberOfBets, uint _minAmountByBet, uint _prize, bytes32 _hash) {
-        blockPointer = _blockPointer;
-        maxNumberOfBets = _maxNumberOfBets;
-        minAmountByBet = _minAmountByBet;
-        prize = _prize;
-        hash = _hash;
-        currentRound = createRound();
+    function createGame(
+        uint pointer,
+        uint maxNumberOfBets,
+        uint minAmountByBet,
+        uint prize
+    ) onlyowner returns (uint id) {
+        id = games.length;
+        games.length += 1;
+        games[id].id = id;
+        games[id].pointer = pointer;
+        games[id].maxNumberOfBets = maxNumberOfBets;
+        games[id].minAmountByBet = minAmountByBet;
+        games[id].prize = prize;
+        games[id].currentRound = createGameRound(id);
     }
 
-    function createRound() internal returns (uint id) {
-        id = rounds.length;
-        rounds.length += 1;
-        rounds[id].id = id;
-        rounds[id].open = false;
-        rounds[id].maxNumberOfBets = maxNumberOfBets;
-        rounds[id].minAmountByBet = minAmountByBet;
-        rounds[id].prize = prize;
-        rounds[id].blockNumber = 0;
-        rounds[id].blockHash = hash;
-        rounds[id].open = true;
-        RoundOpen(id, maxNumberOfBets, minAmountByBet);
+    function createGameRound(uint gameId) internal returns (uint id) {
+        Game game = games[gameId];
+        id = games[gameId].rounds.length;
+        game.rounds.length += 1;
+        game.rounds[id].id = id;
+        game.rounds[id].open = true;
+        RoundOpen(gameId, id);
     }
 
-    function payout() internal {
-        for (uint i = 0; i < bets[currentRound].length; i++) {
-            if (bets[currentRound][i].bet == rounds[currentRound].number) {
-                uint id = winners[currentRound].length;
-                winners[currentRound].length += 1;
-                winners[currentRound][id] = bets[currentRound][i].origin;
+    function payout(uint gameId) internal {
+        Game game = games[gameId];
+        Round round = game.rounds[game.currentRound];
+        Bet[] bets = round.bets;
+        address[] winners = round.winners;
+        for (uint i = 0; i < bets.length; i++) {
+            if (bets[i].bet == round.number) {
+                uint id = winners.length;
+                winners.length += 1;
+                winners[id] = bets[i].origin;
             }
         }
 
-        if (winners[currentRound].length > 0) {
-            uint prize = rounds[currentRound].prize / winners[currentRound].length;
-            for (i = 0; i < winners[currentRound].length; i++) {
-                balances[winners[currentRound][i]] += prize;
-                RoundWinner(winners[currentRound][i], prize);
+        if (winners.length > 0) {
+            uint prize = divide(game.prize, winners.length);
+            for (i = 0; i < winners.length; i++) {
+                balances[winners[i]] = add(balances[winners[i]], prize);
+                RoundWinner(game.id, game.currentRound, winners[i], prize);
             }
         }
     }
 
-    function closeRound() constant internal {
-        rounds[currentRound].open = false;
-        rounds[currentRound].blockHash = getBlockHash(blockPointer);
-        rounds[currentRound].number = getNumber(rounds[currentRound].blockHash);
-        payout();
-        RoundClose(currentRound, rounds[currentRound].number, rounds[currentRound].blockNumber, rounds[currentRound].blockHash);
-        currentRound = createRound();
+    function closeRound(uint gameId) constant internal {
+        Game game = games[gameId];
+        Round round = game.rounds[game.currentRound];
+        round.open = false;
+        round.hash = getBlockHash(game.pointer);
+        round.number = getNumber(game.rounds[game.currentRound].hash);
+        game.pointer = game.rounds[game.currentRound].number;
+        payout(gameId);
+        RoundClose(game.id, round.id, round.number);
+        game.currentRound = createGameRound(game.id);
     }
 
     function getBlockHash(uint i) constant returns (bytes32 blockHash) {
-        if (i > 256) {
-            i = 256;
+        if (i > 255) {
+            i = 255;
         }
         uint blockNumber = block.number - i;
         blockHash = block.blockhash(blockNumber);
@@ -123,26 +155,30 @@ contract Lotthereum is Mortal {
         return mint;
     }
 
-    function bet(uint8 bet) public payable returns (bool) {
-        if (!rounds[currentRound].open) {
+    function placeBet(uint gameId, uint8 bet) public payable returns (bool) {
+        Game game = games[gameId];
+        Round round = game.rounds[game.currentRound];
+        Bet[] bets = round.bets;
+
+        if (!round.open) {
             return false;
         }
 
-        if (msg.value < rounds[currentRound].minAmountByBet) {
+        if (msg.value < game.minAmountByBet) {
             return false;
         }
 
-        uint id = bets[currentRound].length;
-        bets[currentRound].length += 1;
-        bets[currentRound][id].id = id;
-        bets[currentRound][id].round = currentRound;
-        bets[currentRound][id].bet = bet;
-        bets[currentRound][id].origin = msg.sender;
-        bets[currentRound][id].amount = msg.value;
-        BetPlaced(msg.sender, currentRound, id);
+        uint id = bets.length;
+        bets.length += 1;
+        bets[id].id = id;
+        bets[id].round = round.id;
+        bets[id].bet = bet;
+        bets[id].origin = msg.sender;
+        bets[id].amount = msg.value;
+        BetPlaced(game.id, round.id, msg.sender, id);
 
-        if (bets[currentRound].length == rounds[currentRound].maxNumberOfBets) {
-            closeRound();
+        if (bets.length == game.maxNumberOfBets) {
+            closeRound(game.id);
         }
 
         return true;
@@ -166,52 +202,59 @@ contract Lotthereum is Mortal {
         return 0;
     }
 
-    function getCurrentRoundId() constant returns(uint) {
-        return currentRound;
+    function getGames() constant returns(uint[] memory ids) {
+        ids = new uint[](games.length);
+        for (uint i = 0; i < games.length; i++) {
+            ids[i] = games[i].id;
+        }
     }
 
-    function getRoundOpen(uint id) constant returns(bool) {
-        return rounds[id].open;
+    function getGameCurrentRoundId(uint gameId) constant returns(uint) {
+        return games[gameId].currentRound;
     }
 
-    function getRoundMaxNumberOfBets(uint id) constant returns(uint) {
-        return rounds[id].maxNumberOfBets;
+    function getGameRoundOpen(uint gameId, uint roundId) constant returns(bool) {
+        return games[gameId].rounds[roundId].open;
     }
 
-    function getRoundMinAmountByBet(uint id) constant returns(uint) {
-        return rounds[id].minAmountByBet;
+    function getGameMaxNumberOfBets(uint gameId) constant returns(uint) {
+        return games[gameId].maxNumberOfBets;
     }
 
-    function getRoundPrize(uint id) constant returns(uint) {
-        return rounds[id].prize;
+    function getGameMinAmountByBet(uint gameId) constant returns(uint) {
+        return games[gameId].minAmountByBet;
     }
 
-    function getRoundNumberOfBets(uint id) constant returns(uint) {
-        return bets[id].length;
+    function getGamePrize(uint gameId) constant returns(uint) {
+        return games[gameId].prize;
     }
 
-    function getRoundBetOrigin(uint roundId, uint betId) constant returns(address) {
-        return bets[roundId][betId].origin;
+    function getRoundNumberOfBets(uint gameId, uint roundId) constant returns(uint) {
+        return games[gameId].rounds[roundId].bets.length;
     }
 
-    function getRoundBetAmount(uint roundId, uint betId) constant returns(uint) {
-        return bets[roundId][betId].amount;
+    function getRoundBetOrigin(uint gameId, uint roundId, uint betId) constant returns(address) {
+        return games[gameId].rounds[roundId].bets[betId].origin;
     }
 
-    function getRoundBetNumber(uint roundId, uint betId) constant returns(uint) {
-        return bets[roundId][betId].bet;
+    function getRoundBetAmount(uint gameId, uint roundId, uint betId) constant returns(uint) {
+        return games[gameId].rounds[roundId].bets[betId].amount;
     }
 
-    function getRoundNumber(uint id) constant returns(uint8) {
-        return rounds[id].number;
+    function getRoundBetNumber(uint gameId, uint roundId, uint betId) constant returns(uint) {
+        return games[gameId].rounds[roundId].bets[betId].bet;
     }
 
-    function getRoundBlockNumber(uint id) constant returns(uint) {
-        return rounds[id].blockNumber;
+    function getRoundNumber(uint gameId, uint roundId) constant returns(uint8) {
+        return games[gameId].rounds[roundId].number;
     }
 
-    function getBlockPointer() constant returns(uint) {
-        return blockPointer;
+    function getRoundPointer(uint gameId, uint roundId) constant returns(uint) {
+        return games[gameId].rounds[roundId].pointer;
+    }
+
+    function getPointer(uint gameId) constant returns(uint) {
+        return games[gameId].pointer;
     }
 
     function () payable {
