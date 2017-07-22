@@ -178,7 +178,15 @@ function Lotthereum() {
     //  EVENTS
     //
     this.initEvents = function () {
-        var range = {fromBlock: web3.eth.blockNumber, toBlock: 'latest'};
+        var currentBlockNumber = 0;
+        web3.eth.getBlockNumber(function(error, result){
+            if(!error)
+                currentBlockNumber = result;
+            else
+                console.error(error);
+        })
+
+        var range = {fromBlock: currentBlockNumber, toBlock: 'latest'};
         self.betPlacedEvent = self.contractInstance.BetPlaced(range);
         self.betPlacedEvent.watch(self.betPlaced);
 
@@ -398,7 +406,7 @@ function Lotthereum() {
         if (self.tabbed <= 1) {
             $('#tabs').html('<li class="tab col s2"><a class="active" href="#intro1">Lotthereum</a></li>');
             for (var i = 0; i < this.games.length; i++) {
-                $('#tabs').append('<li class="tab col s2"><a href="#game_' + this.games[i].id + '_holder">' + this.games[i].minAmount +'</a></li>');
+                $('#tabs').append('<li class="tab col s2"><a href="#game_' + this.games[i].id + '_holder">' + this.games[i].minAmount +' ETH</a></li>');
             }
             $('#tabs').append('<li class="tab col s2"><a href="#withdraw"><span class="new badge balance" data-badge-caption="ETH"></span>Withdraw</a></li>');
             $('#tabs').tabs({

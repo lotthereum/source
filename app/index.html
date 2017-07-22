@@ -338,8 +338,8 @@
     <div class="container">
       <div class="row">
         <div class="col l12 s12 white-text">
-          <a class="waves-effect waves btn-flat left white-text" href="https://etherscan.io/address/0x3c563651318b6b2cf555207a1e611bb577fff446#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a>
-          <a id="trollbox_btn" class="waves-effect waves btn-flat right white-text" href="https://etherscan.io/address/0x3c563651318b6b2cf555207a1e611bb577fff446#code"><i class="material-icons left">chat</i>TROLLBOX</a>
+          <a class="waves-effect waves btn-flat left white-text" href="https://etherscan.io/address/0xd64ad4eefaacb96a0865687cfeef4c4a2cfbfef2#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a>
+          <a id="trollbox_btn" class="waves-effect waves btn-flat right white-text"><i class="material-icons left">chat</i>TROLLBOX</a>
 
           <!-- <p class="grey-text text-lighten-4">If you want to support the team, send us over a donation! Any amount would help support and continue development on this project and is greatly appreciated.</p>
           <a class="waves-effect waves btn orange lighten-2 modal-trigger" href="#donate1"><i class="material-icons left">attach_money</i>DONATE NOW</a> -->
@@ -417,17 +417,20 @@
                     console.log('This is mainnet')
                     // 0x5e6ed16d845a46b9f863a256e7a3194f2a9e8b5c 1st mainnet
                     // 0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23 2nd mainnet
-                    window.contract_address = '0x3c563651318b6b2cf555207a1e611bb577fff446'  // 3 mainnet
+                    // 0x3c563651318b6b2cf555207a1e611bb577fff446 3rd mainnet
+                    // 0xd142a0af9a527ff8d63fefda2da0907048947cde 4th mainnet
+                    window.contract_address = '0xd64ad4eefaacb96a0865687cfeef4c4a2cfbfef2'  // 5th mainnet
                     break
                 case '2':
                     console.log('This is the deprecated Morden test network.')
                     break
                 case '3':
                     console.log('This is the ropsten test network.')
-                    // '0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c'  1st ropsten
-                    // '0x9e97ec0421b8d3c2d818d02b8dbe59c7f90affc6'  2nd ropsten
-                    // '0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23'  3rd ropsten
-                    window.contract_address = '0x668143a1fc6c3a83a85c2fd20f3e51dac06fd3f3'  // 4 ropsten
+                    // 0x84b0d29f2c4abd8c1c8de5e10954bf0dcc01d83c 1st ropsten
+                    // 0x9e97ec0421b8d3c2d818d02b8dbe59c7f90affc6 2nd ropsten
+                    // 0xc9a8b0bc9bb24846f6fdc832ae7ef8269ac26e23 3rd ropsten
+                    // 0x668143a1fc6c3a83a85c2fd20f3e51dac06fd3f3 4th ropsten
+                    window.contract_address = '0xd5fa1a05b370d9ef4ccd80521fbca2e3b377a5aa'  // 5th ropsten
                     break
                 default:
                     console.log('This is an unknown network.')
