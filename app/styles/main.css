@@ -290,3 +290,7 @@ body {
 .dropdown-content li > a, .dropdown-content li > span {
   width: 100% !important;
 }
+
+#bet-modal .modal-content {
+  padding-top: 0 !important;
+}
