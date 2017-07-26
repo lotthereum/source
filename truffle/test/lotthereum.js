@@ -19,8 +19,55 @@ contract('Lotthereum', function(accounts) {
           assert.equal(events.length, 1);
           assert.equal(events[0].args.gameId.valueOf(), 1);
           assert.equal(events[0].args.roundId.valueOf(), 0);
-          done();
+
+          instance.createGame(3, 10, 1, 10, {from: accounts[0]}).then(function() {
+            return watcher.get();
+          }).then(function(events) {
+            assert.equal(events.length, 1);
+            assert.equal(events[0].args.gameId.valueOf(), 2);
+            assert.equal(events[0].args.roundId.valueOf(), 0);
+            done();
+          });
         });
+      });
+    });
+  });
+
+  it("should allow owner to close games", function(done) {
+    var lotthereum;
+    Lotthereum.deployed().then(function(instance) {
+      var watcher = instance.GameClosed({gameId: 2});
+      instance.closeGame(2, {from: accounts[0]}).then(function() {
+        return watcher.get();
+      }).then(function(events) {
+        assert.equal(events.length, 1);
+        assert.equal(events[0].args.gameId, 2);
+
+        instance.getGames().then(function(games) {
+          assert.equal(games.length, 2);
+          assert.equal(games[0].valueOf(), 0);
+          assert.equal(games[1].valueOf(), 1);
+        }).then(done).catch(done);
+      });
+    });
+  });
+
+  it("should allow owner to open games", function(done) {
+    var lotthereum;
+    Lotthereum.deployed().then(function(instance) {
+      var watcher = instance.GameOpened({gameId: 2});
+      instance.openGame(2, {from: accounts[0]}).then(function() {
+        return watcher.get();
+      }).then(function(events) {
+        assert.equal(events.length, 1);
+        assert.equal(events[0].args.gameId, 2);
+
+        instance.getGames().then(function(games) {
+          assert.equal(games.length, 3);
+          assert.equal(games[0].valueOf(), 0);
+          assert.equal(games[1].valueOf(), 1);
+          assert.equal(games[2].valueOf(), 2);
+        }).then(done).catch(done);
       });
     });
   });
@@ -29,9 +76,10 @@ contract('Lotthereum', function(accounts) {
     var lotthereum;
     Lotthereum.deployed().then(function(instance) {
       return instance.getGames().then(function(games) {
-        assert.equal(games.length, 2);
+        assert.equal(games.length, 3);
         assert.equal(games[0].valueOf(), 0);
         assert.equal(games[1].valueOf(), 1);
+        assert.equal(games[2].valueOf(), 2);
       }).then(done).catch(done);
     });
   });
@@ -118,14 +166,14 @@ contract('Lotthereum', function(accounts) {
     var account = accounts[1];
     var gameId = 0;
     Lotthereum.deployed().then(function(instance) {
-      return instance.placeBet(gameId, 1, {from: account, value: 1}).then(function(result) {
+      instance.placeBet(gameId, 0, {from: account, value: 1}).then(function(result) {
         assert.isNotNull(result.tx);
         assert.equal(result.receipt.logs.length, 0);
       }).then(done).catch(done);
     });
   });
 
-  it("should allow 17 bets to be placed", function(done) {
+  it("should allow 18 bets to be placed", function(done) {
     var lotthereum;
     var account = accounts[1];
     var gameId = 0;
@@ -212,13 +260,61 @@ contract('Lotthereum', function(accounts) {
     var account = accounts[1];
     Lotthereum.deployed().then(function(instance) {
       instance.getBalance({from: account}).then(function(balance) {
-        assert.equal(balance, 10);
+        assert.equal(balance.valueOf(), 10);
       });
       account = accounts[2];
       instance.getBalance({from: account}).then(function(balance) {
-        assert.equal(balance, 10);
+        assert.equal(balance.valueOf(), 10);
       });
     });
     done();
   });
+
+  it("should run automatically without mannual intervention... lets place 50 bets", function(done) {
+    var lotthereum;
+    var account = accounts[0];
+    var gameId = 2;
+    Lotthereum.deployed().then(function(instance) {
+      var nextRoundId = 1;
+      var numberOfRoundsOpenned = 0;
+
+      var watcher = instance.BetPlaced({origin: account});
+      var roundOpenWatcher = instance.RoundOpen({id: nextRoundId});
+
+      var bet = -1;
+      for (var i = 1; i <= 10; i++) {
+
+        bet++;
+        if (bet > 9) {
+          bet = 0;
+        }
+        instance.placeBet(gameId, bet, {from: account, value: 5}).then(function() {
+          return watcher.get();
+        }).then(function(events) {
+          if (typeof events != 'undefined') {
+            if (events.length > 0) {
+              assert.equal(events[0].args.origin, account);
+              return roundOpenWatcher.get();
+            }
+          }
+        }).then(function(events) {
+          if (typeof events != 'undefined') {
+            if (events.length > 0) {
+              assert.equal(events.length, 1);
+              assert.equal(events[0].args.gameId.valueOf(), gameId);
+              assert.equal(events[0].args.roundId.valueOf(), 1);
+              numberOfRoundsOpenned++;
+              nextRoundId++;
+              return numberOfRoundsOpenned;
+            }
+          }
+        }).then(function(numberOfRoundsOpenned) {
+          if (numberOfRoundsOpenned == 10) {
+            done();
+          }
+        })
+      }
+    });
+  });
+
 });
