@@ -345,7 +345,7 @@
     <div class="container">
       <div class="row">
         <div class="col l12 s12 white-text">
-          <a class="waves-effect waves btn-flat left white-text" href="https://etherscan.io/address/0x5a2a454675c1b659caa58b5675ee759b992b84b1#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a>
+          <a class="waves-effect waves btn-flat left white-text" href="https://etherscan.io/address/0x19fdab5b5c57e92e3c25bd67321c92933f321f96#code" target="_blank"><i class="material-icons left">code</i>CONTRACT</a>
           <a id="trollbox_btn" class="waves-effect waves btn-flat right white-text"><i class="material-icons left">chat</i>TROLLBOX</a>
 
           <!-- <p class="grey-text text-lighten-4">If you want to support the team, send us over a donation! Any amount would help support and continue development on this project and is greatly appreciated.</p>
@@ -379,9 +379,6 @@
   <script src="/bower_components/jquery/dist/jquery.js"></script>
   <script src="/bower_components/materialize/bin/materialize.js"></script>
   <script src="/bower_components/async/dist/async.js"></script>
-  <script src="/bower_components/bignumber.js/bignumber.js"></script>
-  <script src="/bower_components/crypto-js/index.js"></script>
-  <script src="/bower_components/web3/dist/web3.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -395,7 +392,6 @@
   <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 
   <!-- build:js scripts/main.js -->
-  <!-- <script src="scripts/round.js"></script> -->
   <script src="scripts/blockies.js"></script>
   <script src="scripts/lotthereum.js"></script>
   <!-- endbuild -->
@@ -416,7 +412,7 @@
 
         // Net check
         web3.version.getNetwork((err, netId) => {
-            window.contract_address = '0x57ee12d0958de02db24efc25384dde6c9295941c';
+            window.contract_address = '0x92b9bd099367bc27329cbb2f612cf2bff2341b87';
             switch (netId) {
                 case '1':
                     console.log('This is mainnet')
@@ -426,7 +422,8 @@
                     // 0xd142a0af9a527ff8d63fefda2da0907048947cde 4th mainnet
                     // 0xd64ad4eefaacb96a0865687cfeef4c4a2cfbfef2 5th mainnet
                     // 0x8eca2366e8ad2051a14af338620f6dd101c231e1 6th mainnet
-                    window.contract_address = '0x5a2a454675c1b659caa58b5675ee759b992b84b1'  // 7th mainnet
+                    // 0x5a2a454675c1b659caa58b5675ee759b992b84b1 7th mainnet
+                    window.contract_address = '0x19fdab5b5c57e92e3c25bd67321c92933f321f96'  // 8th mainnet
                     break
                 case '2':
                     console.log('This is the deprecated Morden test network.')

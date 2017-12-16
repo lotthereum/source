@@ -273,7 +273,7 @@ function Lotthereum() {
         html = html.replace(/{prize}/g, game.prize);
         html = html.replace('{minAmount}', game.minAmount);
         html = html.replace('{minAmount}', game.minAmount);
-        html = html.replace('{numberOfBets}', game.numberOfBets);
+        html = html.replace('{numberOfBets}', round.numberOfBets);
         html = html.replace('{remaining}', round.remaining);
         html = html.replace(/{progress}/g, round.progress);
 
@@ -385,7 +385,8 @@ function Lotthereum() {
             });
 
             $('#place-your-bet').click(function() {
-                $('ul.tabs').tabs('select_tab', 'game_4_holder');
+                window.scrollTo(0, 0);
+                $('ul.tabs').tabs('select_tab', 'game_3_holder');
             });
 
             $(window).scroll(function() {
